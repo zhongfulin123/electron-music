@@ -1,5 +1,5 @@
 export default {
-  ['--body-bgcolor']: '#252525',
+  ['--body-bgcolor']: '#2B2B2B',
   ['--light-bgcolor']: '#2e2e2e',
 
   ['--font-color']: '#b1b1b1',
@@ -16,16 +16,18 @@ export default {
   ['--shallow-theme-bgcolor-hover']: '#352726',
 
   //header
-  ['--header-bgcolor']: '#252525',
+  ['--header-bgcolor']: '#222225',
   ['--header-font-color']: '#b1b1b1',
   ['--header-input-color']: '#b1b1b1',
   ['--header-input-bgcolor']: '#4B4B4B',
   ['--header-input-placeholder-color']: '#727272',
 
   //menu
-  ['--menu-bgcolor']: '#202020',
-  ['--menu-item-hover-bg']: '#1d1d1d',
-  ['--menu-item-active-bg']: '#1b1b1b',
+  ['--menu-bgcolor']: '#2B2B2B',
+  ['--menu-item-hover-bg']: '#333333',
+  ['--menu-item-active-bg']: '#333333',
+  ['--menu-item-border-bg']: '#454545',
+  
 
   //player
   ['--player-bgcolor']: '#252525',

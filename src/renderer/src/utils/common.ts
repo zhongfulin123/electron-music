@@ -85,7 +85,7 @@ export function shallowEqual(a, b, compareKey) {
   return true
 }
 
-export function notify(message, type) {
+export function notify(message, type?:string) {
   const params = {
     message,
     duration: 1500

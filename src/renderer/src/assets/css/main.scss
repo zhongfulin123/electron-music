@@ -1,15 +1,26 @@
 @import './reset.scss';
-@import './app.scss';
 #app {
   height: 100%;
   background-color: var(--body-bgcolor);
   font-size: $font-size;
 }
+body {
+  color: var(--font-color);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #f5f5f5;
+  display: none;
+}
+
 
 .drag {
   -webkit-app-region: drag;
 }
 .nodrag {
   -webkit-app-region: no-drag;
+  color: rgb(51, 51, 51);
 }
 

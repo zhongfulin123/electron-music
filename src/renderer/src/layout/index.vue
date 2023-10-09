@@ -1,40 +1,65 @@
 <template>
-     <div class="layout">
-
+  <div class="layout">
     <LayoutHeader />
-    <!-- <div class="layout-body">
-      <div
-        class="layout-menu"
-        v-show="isMenuShow"
-      >
+    <div class="layout-body">
+      <div class="layout-menu" v-show="isMenuShow">
         <LayoutMenu />
       </div>
-      <div
-        class="content"
-        id="page-content"
-      >
-        <router-view />
+      <div class="content" id="page-content">
+        <router-view :class="routerViewCls" />
       </div>
-    </div> -->
-  </div>
-    <!-- <div class="box">
-        77777
     </div>
-    <el-button type="primary">Primary</el-button>
-    <svg-icon name="close" color="#ff0000"></svg-icon>
-    <img src="@renderer/assets/icons/close.svg"> -->
+  </div>
 </template>
 
 <script setup lang="ts">
-import LayoutHeader from "./header.vue"
-// import LayoutMenu from "./menu.vue"
-// import redTheme from '@renderer/assets/css/themes/variables-red.js'
-// import SvgIcon from '@renderer/components/SvgIcon.vue';
-// console.log(redTheme)
-// import {getBanner} from '@renderer/api/index'
-// getBanner()
+import { useMusicStore } from '@renderer/store/music'
+import LayoutHeader from './header.vue'
+import LayoutMenu from './menu.vue'
+import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { menuRoutes } from '@renderer/router'
 
+const musicStore = useMusicStore()
+const { isMenuShow } = storeToRefs(musicStore)
+
+/**
+ * 需要居中对齐的路由
+ */
+
+const route = useRoute()
+const routerViewCls = computed(() => {
+  return menuRoutes.map((item) => item.name).includes(route.name as string)
+    ? 'router-view-center'
+    : ''
+})
 </script>
 
 <style scoped lang="scss">
+.layout {
+  height: 100%;
+
+  .layout-body {
+    display: flex;
+    height: calc(100% - #{$header-height});
+
+    .layout-menu {
+      // 这个100%已经减去了头部height
+      height: calc(100% - #{$mini-player-height});
+    }
+
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      min-width: $layout-content-min-width;
+      margin-bottom: $mini-player-height;
+
+      .router-view-center {
+        max-width: $center-content-max-width;
+        margin: auto;
+      }
+    }
+  }
+}
 </style>

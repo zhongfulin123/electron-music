@@ -4,7 +4,7 @@
   white-space: nowrap;
 }
 
-@mixin text-ellipsis-multi($line) {
+@mixin text-ellipsis-multi($line  ) {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;

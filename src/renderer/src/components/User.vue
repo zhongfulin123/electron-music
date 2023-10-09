@@ -139,9 +139,12 @@ async function handleLogout() {
   background-color: var(--header-bgcolor);
   color: var(--header-font-color);
 }
-:deep(.el-dropdown-menu) {
-  padding: 0;
+
+.el-dropdown-menu {
+  padding: 0px;
+  border: none;
 }
+
 .avatar {
   display: flex;
   align-items: center;

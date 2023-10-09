@@ -1,4 +1,4 @@
 import { http } from '@renderer/utils'
 
-export const getListDetail = params =>
+export const getListDetail = (params):any =>
   http.get('/playlist/detail', { params })

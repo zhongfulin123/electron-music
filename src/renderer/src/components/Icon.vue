@@ -8,6 +8,8 @@
 </template>
 
 <script setup lang="ts">
+// import { toRem } from '@renderer/utils'
+// console.log(toRem)
 const props = defineProps({
   size: {
     type: Number,

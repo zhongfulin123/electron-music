@@ -1,17 +1,20 @@
 <template>
-    <div>
-          <!-- <div @click="musicStore.increment()">+1</div> -->
-        <!-- <i class="iconfont icon-home"></i> -->
-    </div>
+     <div class="discovery">
+      <Banner />
+      <NewPlaylists />
+      <NewSongs />
+      <!-- <NewMvs />  -->
+  </div>
 </template>
 
 <script setup lang="ts">
-import {useMusicStore} from '@renderer/store/music'
-const musicStore = useMusicStore()
-musicStore.currentTime = 5
-console.log(musicStore.currentIndex)
+import Banner from './banner.vue'
+import NewPlaylists from './new-playlists.vue'
+import NewSongs from './new-songs.vue'
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.discovery {
+  padding: 18px 32px;
+}
 </style>

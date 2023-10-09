@@ -53,7 +53,6 @@ const globalStore = useGlobalStore()
 </script>
 
 <style scoped lang="scss">
-// @import '@renderer/assets/css/element-overwrite.scss';
 .ml-15 {
   margin-left: 15px;
 }
@@ -67,12 +66,6 @@ const globalStore = useGlobalStore()
   justify-content: flex-end;
   background-color: var(--header-bgcolor);
   padding-right: 15px;
-
-  // @include el-input-theme(
-  //   var(--header-input-color),
-  //   var(--header-input-bgcolor),
-  //   var(--header-input-placeholder-color)
-  // );
 
   :deep( .iconfont) {
     color: var(--header-font-color);

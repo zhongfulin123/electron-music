@@ -1,17 +1,17 @@
 import { http } from '@renderer/utils'
 
 // 获取音乐url
-export const getSongUrl = id => http.get(`/song/url?id=${id}`)
+export const getSongUrl = (id):any => http.get(`/song/url?id=${id}`)
 
 // 获取音乐详情
-export const getSongDetail = ids => http.get(`/song/detail?ids=${ids}`)
+export const getSongDetail = (ids):any => http.get(`/song/detail?ids=${ids}`)
 
 // 新歌速递
-export const getTopSongs = type => http.get(`/top/song?type=${type}`)
+export const getTopSongs = (type):any => http.get(`/top/song?type=${type}`)
 
 // 相似音乐
-export const getSimiSongs = (id, option) =>
+export const getSimiSongs = (id, option):any =>
 http.get(`/simi/song?id=${id}`, option)
 
 // 歌词
-export const getLyric = id => http.get(`/lyric?id=${id}`)
+export const getLyric = (id):any => http.get(`/lyric?id=${id}`)

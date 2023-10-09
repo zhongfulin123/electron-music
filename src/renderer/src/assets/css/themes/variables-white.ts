@@ -23,9 +23,10 @@ export default {
   ['--header-input-placeholder-color']: '#BEBEBE',
 
   // menu
-  ['--menu-bgcolor']: '#ededed',
-  ['--menu-item-hover-bg']: '#e7e7e7',
-  ['--menu-item-active-bg']: '#e2e2e2',
+  ['--menu-bgcolor']: '#FFFFFF',
+  ['--menu-item-hover-bg']: '#F6F6F7',
+  ['--menu-item-active-bg']: '#F6F6F7',
+  ['--menu-item-border-bg']: '#E0E0E0',
 
   //player
   ['--player-bgcolor']: '#F5F5F5',
