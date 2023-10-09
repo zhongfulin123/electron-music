@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Electron</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="//at.alicdn.com/t/font_777085_hi9s8r75skv.css"
+  />
+  <link
+  rel="stylesheet"
+  type="text/css"
+  href="//at.alicdn.com/t/c/font_2749953_9hqlyi213l7.css"
+/>
+  
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self';img-src 'self' http://p1.music.126.net; font-src 'self' *.alicdn.com data:; connect-src 'self' https://mu-api.yuk0.com ; script-src 'self'; style-src 'self' *.alicdn.com 'unsafe-inline'"
+    />
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
