@@ -78,8 +78,7 @@ function  changeTheme(themeKey) {
       })
     }
     onMounted(()=>{
-        const theme = JSON.parse(localStorage.getItem('global')!)?.theme || globalStore.theme
-        changeTheme(theme)
+        changeTheme(globalStore.theme)
     })
   
 </script>

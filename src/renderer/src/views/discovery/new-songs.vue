@@ -17,23 +17,17 @@
 </template>
 
 <script setup lang="ts">
-// import { mapActions, mapMutations } from "@/store/helper/music"
 import Title from './Title.vue'
 import SongCard from './song-card.vue'
 import { getNewSongs } from '@renderer/api'
 import { createSong } from '@renderer/utils'
 import { computed, onMounted, ref } from 'vue'
 import { useMusicStore } from '@renderer/store/music'
-import { storeToRefs } from 'pinia'
 const musicStroe = useMusicStore()
 const { startSong, setPlaylist } = musicStroe
-// const { setcount } = musicStroe
-
-// const {count} = storeToRefs(musicStroe)
 const chunkLimit = Math.ceil(10 / 2)
 const list = ref<[]>([])
 onMounted(() => {
-  // console.log(currentSong.value,'currentSong')
   queryNewSongs()
 })
 async function queryNewSongs() {
@@ -55,7 +49,7 @@ function onClickSong(listIndex, index) {
   const nomalizedSongIndex = getSongOrder(listIndex, index) - 1
   const nomalizedSong = normalizedSongs.value[nomalizedSongIndex]
   startSong(nomalizedSong)
-  setPlaylist(normalizedSongs)
+  setPlaylist(normalizedSongs.value)
 }
 function nomalizeSong(song) {
   const {

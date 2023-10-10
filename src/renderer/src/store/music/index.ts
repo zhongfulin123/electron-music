@@ -17,9 +17,7 @@ function getRandomIndex(playlist, currentIndex) {
 export const useMusicStore = defineStore(
   'music',
   () => {
-    const currentSong = ref<{
-      [propName: string]: string
-    }>({})
+    const currentSong = ref<Record<string,any>>({})
     // 当前播放时长
     const currentTime = ref(0)
     // 播放状态
@@ -162,7 +160,6 @@ export const useMusicStore = defineStore(
 
     function setCurrentSong(data) {
       currentSong.value = data
-      console.log('我被触发了')
     }
 
     function setCurrentTime(data) {

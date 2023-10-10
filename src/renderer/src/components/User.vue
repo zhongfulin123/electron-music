@@ -48,7 +48,7 @@ const userStore = useUserStore()
 const dialogFormVisible = ref(false)
 const userInfo = ref()
 onMounted(() => {
-  const uid = JSON.parse(localStorage.getItem('uid')!)?.uid || ''
+  const uid =  userStore.uid 
   if (uid) {
     userdetail(uid)
   }
