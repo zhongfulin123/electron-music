@@ -88,6 +88,7 @@ async function userdetail(uid) {
   const res = await getUserDetail(uid)
   if (res.code !== 200) return
   userInfo.value = res.profile
+  userStore.setUserInfo( userInfo.value)
 }
 
 

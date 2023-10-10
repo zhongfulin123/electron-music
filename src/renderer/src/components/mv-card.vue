@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import { isDef, formatTime, formatNumber } from '@renderer/utils'
 import { useRouter } from 'vue-router'
+import PlayIcon from '@renderer/components/play-icon.vue'
 const props = defineProps(['id', 'img', 'duration', 'playCount', 'name', 'author'])
 const router = useRouter()
 function goMv() {

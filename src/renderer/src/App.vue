@@ -5,7 +5,7 @@ import MiniPlayer from "@renderer/components/mini-player/index.vue"
 
 <template>
       <layout></layout>
-              <MiniPlayer></MiniPlayer>
+      <MiniPlayer></MiniPlayer>
     <!-- <div> -->
       
 

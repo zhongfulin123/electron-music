@@ -16,7 +16,7 @@ import { getUserPlaylist } from '@renderer/api'
 import { useUserStore } from '@renderer/store/user'
 const userStore = useUserStore()
 
-const { uid } = storeToRefs(userStore)
+const { uid,userInfo } = storeToRefs(userStore)
 
 const menusWithPlaylist = ref([])
 
@@ -41,21 +41,30 @@ async function queyUserPlayList() {
 
   const retMenus: any[] = []
 
-  const genPlaylistChildren = (playlist) =>
+  const genPlaylistChildren = (playlist,icon?:string) =>
     playlist.map(({ id, name }) => ({
       path: `/playlist/${id}`,
       meta: {
         title: name,
-        icon: 'playlist-menu'
+        icon: icon|| 'playlist-menu'
       }
     }))
+    retMenus.push({
+    title: '我的音乐',
+    children: genPlaylistChildren(res.playlist.filter(item=>item.userId === uid.value && item.name===userInfo.value.nickname +'喜欢的音乐').map(item=>{
+     return {
+      ...item,
+       name:'我喜欢的音乐'
+     } 
+    }),'xihuan')
+  })
 
   retMenus.push({
     title: '创建的歌单',
-    children: genPlaylistChildren(res.playlist.filter(item=>item.userId === uid.value))
+    children: genPlaylistChildren(res.playlist.filter(item=>item.userId === uid.value && !(item.name===userInfo.value.nickname +'喜欢的音乐')))
   })
   retMenus.push({
-    title: '创建的歌单',
+    title: '收藏的歌单',
     children: genPlaylistChildren(res.playlist.filter(item=>!(item.userId === uid.value)))
   })
 

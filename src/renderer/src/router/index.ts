@@ -46,18 +46,8 @@ const routes: RouteRecordRaw[] = [
     path: '/playlist/:id',
     name: 'playlistDetail',
     component: ()=>import('@renderer/views/playlistDetail/index.vue'),
-    // component: PlaylistDetail,
   },
   ...menuRoutes
-  // {
-  //   path: '/discovery',
-  //   name: 'discovery',
-  //   component: () => import('@renderer/views/discovery/index.vue'),
-  //   meta: {
-  //     title: '发现音乐',
-  //     icon: 'music'
-  //   }
-  // }
 ]
 const router = createRouter({
   history: createWebHistory(),
