@@ -1,7 +1,7 @@
 <template>
   <div class="song-card">
     <div class="order-wrap">
-      <span class="order">{{ String(order)?.padStart(2,'0') }}</span>
+      <span class="order">{{ String(order)?.padStart(2, '0') }}</span>
     </div>
     <div class="img-wrap">
       <img :src="img" />
@@ -14,12 +14,12 @@
   </div>
 </template>
 
-<script setup lang="ts" >
-import PlayIcon from '@renderer/components/play-icon.vue';
+<script setup lang="ts">
+import PlayIcon from '@renderer/components/play-icon.vue'
 defineProps<{
-  order: string,
-  name: string,
-  img: string,
+  order: string
+  name: string
+  img: string
   artistsText: string
 }>()
 </script>

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { PLAY_HISTORY_KEY, playModeMap, getSongImg } from '@renderer/utils'
+import {playModeMap, getSongImg } from '@renderer/utils'
 
 function getRandomIndex(playlist, currentIndex) {
   // 防止无限循环
@@ -36,6 +36,8 @@ export const useMusicStore = defineStore(
     const playHistory = ref([])
     // 菜单显示
     const isMenuShow = ref(true)
+    // 播放音量
+    const muiscVolume= ref(0.75)
 
     /**
      * 获取当前播放歌曲在列表中的下标
@@ -133,7 +135,6 @@ export const useMusicStore = defineStore(
       }
       playHistoryCopy.unshift(song)
       setPlayHistory(playHistoryCopy)
-      // storage.set(PLAY_HISTORY_KEY, playHistoryCopy)
     }
 
     function clearCurrentSong() {
@@ -189,6 +190,9 @@ export const useMusicStore = defineStore(
     function setMenuShow(data) {
       isMenuShow.value = data
     }
+    function setMusicVolume(data){
+       muiscVolume.value = data
+    }
 
     return {
       currentSong,
@@ -201,6 +205,7 @@ export const useMusicStore = defineStore(
       playlist,
       playHistory,
       isMenuShow,
+      muiscVolume,
       currentIndex,
       hasCurrentSong,
       nextSong,
@@ -219,7 +224,8 @@ export const useMusicStore = defineStore(
       setPlaylistPromptShow,
       setPlaylist,
       setPlayHistory,
-      setMenuShow
+      setMenuShow,
+      setMusicVolume
     }
   },
   {

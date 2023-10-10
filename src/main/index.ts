@@ -3,9 +3,10 @@ import { join ,resolve} from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import logo from '../../resources/logo.png?asset'
 import './drag'
+let mainWindow:BrowserWindow
 function createWindow(): void {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+   mainWindow = new BrowserWindow({
     minWidth:1042,
     minHeight:677,
     show: false,
@@ -60,6 +61,10 @@ app.whenReady().then(() => {
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+})
+
+app.on('before-quit',()=>{
+  mainWindow.webContents.send('setpalySaate',false)
 })
 
 app.on('window-all-closed', () => {

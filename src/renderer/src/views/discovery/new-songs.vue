@@ -42,7 +42,7 @@ const normalizedSongs = computed(() => {
   return list.value.map((song) => nomalizeSong(song))
 })
 const thunkedList = computed(() => {
-  return [list.value.slice(0, chunkLimit), list.value.slice(chunkLimit, list.value.length)]
+  return [list.value.slice(0, chunkLimit), list.value.slice(chunkLimit, list.value.length)] as any[]
 })
 
 function onClickSong(listIndex, index) {

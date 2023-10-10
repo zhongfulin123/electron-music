@@ -11,8 +11,8 @@ import { getBanner } from '@renderer/api'
 import { onMounted, ref } from 'vue'
 const bannerList = ref<any[]>([])
 async function getBannerList() {
-  const res  = (await getBanner()) 
-  if(res.code!==200) return
+  const res = await getBanner()
+  if (res.code !== 200) return
   bannerList.value = res.banners
 }
 onMounted(() => {

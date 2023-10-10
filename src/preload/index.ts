@@ -8,6 +8,9 @@ const api = {
   },
   resizeWindow: (e)=>{
     return ipcRenderer.on('resizeWindow',e)
+  },
+  setpalySaate:(e)=>{
+    return ipcRenderer.on('setpalySaate',e)
   }
 }
 

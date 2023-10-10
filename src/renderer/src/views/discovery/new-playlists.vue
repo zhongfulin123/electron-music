@@ -28,8 +28,8 @@ onMounted(() => {
 })
 
 async function getPersonalizedList() {
-  const res = (await getPersonalized({ limit: 10 })) 
-  if(res.code!==200) return
+  const res = await getPersonalized({ limit: 10 })
+  if (res.code !== 200) return
   list.value = res.result
 }
 </script>

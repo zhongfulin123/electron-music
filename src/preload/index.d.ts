@@ -6,6 +6,7 @@ declare global {
     api: {
       windowChange:(type:number)=>any,
       resizeWindow:(...res)=>any
+      setpalySaate:(...res)=>any
     }
   }
 }
