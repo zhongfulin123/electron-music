@@ -139,15 +139,8 @@ function togglePlaying() {
 async function play() {
     try {
       await audio.value.play()
-      if (isPlayErrorPromptShow.value) {
-        isPlayErrorPromptShow.value = false
-      }
     } catch (error) {
-    console.log(error)
        next()
-      // 提示用户手动播放
-      isPlayErrorPromptShow.value = true
-      setPlayingState(false)
     }
 }
 function pause() {
