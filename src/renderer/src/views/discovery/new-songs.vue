@@ -60,9 +60,11 @@ function nomalizeSong(song) {
       artists,
       album: { blurPicUrl },
       duration
-    }
+    },
+    ...res
   } = song
   return createSong({
+    res,
     id,
     name,
     img: blurPicUrl,

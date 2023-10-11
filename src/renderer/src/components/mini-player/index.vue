@@ -80,7 +80,6 @@
     </div>
     <audio
       :src="currentSong.url"
-      @canplay="ready"
       @ended="end"
       @timeupdate="updateTime"
       ref="audio"
@@ -97,7 +96,6 @@ import { storeToRefs } from 'pinia'
 import { playModeMap, isDef, formatTime } from '@renderer/utils'
 
 const isPlayErrorPromptShow = ref(false)
-const songReady = ref(false)
 const audio = ref()
 const musicStore = useMusicStore()
 const {
@@ -111,6 +109,7 @@ const {
   isPlayerShow,
   prevSong,
   nextSong
+  
 } = storeToRefs(musicStore)
 const {
   setCurrentTime,
@@ -119,7 +118,8 @@ const {
   setPlaylistShow,
   setPlayerShow,
   startSong,
-  setMusicVolume
+  setMusicVolume,
+
 } = musicStore
 onMounted(() => {
   audio.value.currentTime = currentTime.value
@@ -135,23 +135,20 @@ function togglePlaying() {
   }
   setPlayingState(!playing.value)
 }
-function ready() {
-  songReady.value = true
-}
 
 async function play() {
-  if (songReady.value) {
     try {
       await audio.value.play()
       if (isPlayErrorPromptShow.value) {
         isPlayErrorPromptShow.value = false
       }
     } catch (error) {
+    console.log(error)
+       next()
       // 提示用户手动播放
       isPlayErrorPromptShow.value = true
       setPlayingState(false)
     }
-  }
 }
 function pause() {
   audio.value.pause()
@@ -161,14 +158,10 @@ function updateTime(e) {
   setCurrentTime(time)
 }
 function prev() {
-  if (songReady.value) {
     startSong(prevSong.value)
-  }
 }
 function next() {
-  if (songReady.value) {
     startSong(nextSong.value)
-  }
 }
 function end() {
   next()
@@ -234,7 +227,7 @@ watch(
       play()
       return
     }
-    songReady.value = false
+
     if (timer) {
       clearTimeout(timer)
     }

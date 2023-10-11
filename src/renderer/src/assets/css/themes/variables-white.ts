@@ -59,4 +59,8 @@ export default {
   ['--prompt-bg-color']: '#fff',
   //song-detail
   ['--song-shallow-grey-bg']: '#E6E5E6',
+  
+  //歌曲列表
+  ['--table-tr-bg']: '#FAFAFA',
+  ['--table-tr-bg-active']: '#E5E5E5',
 }

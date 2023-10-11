@@ -32,9 +32,6 @@ const props = defineProps({
 const emit = defineEmits(['handleClick'])
 function getIconCls() {
   let cls = `icon-${props.type}`
-  if (props.color) {
-    cls += ` icon-color-${props.color}`
-  }
   return cls
 }
 
@@ -42,7 +39,7 @@ function handleClick (e) {
   emit('handleClick',e)
 }
 function getIconStyle () {
-      const retStyle: {fontSize:number | string,transform?:string} = { fontSize: props.size + 'px' }
+      const retStyle = { fontSize: props.size + 'px',color:props.color }
       return retStyle
 }
 </script>
@@ -62,17 +59,17 @@ function getIconStyle () {
   cursor: pointer;
 }
 
-.icon-color {
-  // 通过prop传入这几个字段
-  // 可以使用默认的几个颜色
-  &-theme {
-    color: $theme-color;
-  }
-  &-white {
-    color: $white;
-  }
-  &-shallow {
-    color: var(--font-color-shallow-grey);
-  }
-}
+// .icon-color {
+//   // 通过prop传入这几个字段
+//   // 可以使用默认的几个颜色
+//   &-theme {
+//     color: $theme-color;
+//   }
+//   &-white {
+//     color: $white;
+//   }
+//   &-shallow {
+//     color: var(--font-color-shallow-grey);
+//   }
+// }
 </style>

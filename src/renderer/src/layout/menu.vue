@@ -51,12 +51,18 @@ async function queyUserPlayList() {
     }))
     retMenus.push({
     title: '我的音乐',
-    children: genPlaylistChildren(res.playlist.filter(item=>item.userId === uid.value && item.name===userInfo.value.nickname +'喜欢的音乐').map(item=>{
+    children: [...genPlaylistChildren(res.playlist.filter(item=>item.userId === uid.value && item.name===userInfo.value.nickname +'喜欢的音乐').map(item=>{
      return {
       ...item,
        name:'我喜欢的音乐'
      } 
-    }),'xihuan')
+    }),'xihuan'),{
+      path: `/download`,
+      meta: {
+        title: '本地与下载',
+        icon: 'xiazai'
+      }
+    }]
   })
 
   retMenus.push({

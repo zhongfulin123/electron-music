@@ -1,7 +1,7 @@
 <template>
   <div class="header" v-if="playlist.id">
     <div class="img-wrap">
-      <img  :src="playlist.coverImgUrl" />
+      <img :src="playlist.coverImgUrl" />
     </div>
     <div class="content">
       <div class="title-wrap">
@@ -34,7 +34,7 @@
 import NButton from '@renderer/components/NButton.vue'
 import { useMusicStore } from '@renderer/store/music'
 import { computed } from 'vue'
-import {formatDate} from '@renderer/utils'
+import { formatDate } from '@renderer/utils'
 const musicStore = useMusicStore()
 const { setPlaylist, startSong } = musicStore
 const props = defineProps({
@@ -59,8 +59,7 @@ const tagsText = computed(() => {
 <style lang="scss" scoped>
 .header {
   display: flex;
-  padding: 36px;
-
+  margin: 36px;
   .img-wrap {
     width: 200px;
     height: 200px;
@@ -98,8 +97,8 @@ const tagsText = computed(() => {
         color: #fbdfdd;
         border: none;
         display: flex;
-       max-width: fit-content;
-       align-items:center;
+        max-width: fit-content;
+        align-items: center;
         .icon {
           margin-right: 4px;
         }

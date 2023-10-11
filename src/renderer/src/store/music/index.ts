@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import {playModeMap, getSongImg } from '@renderer/utils'
-
+import { ElMessage } from 'element-plus'
 function getRandomIndex(playlist, currentIndex) {
   // 防止无限循环
   if (playlist.length === 1) {
@@ -38,6 +38,9 @@ export const useMusicStore = defineStore(
     const isMenuShow = ref(true)
     // 播放音量
     const muiscVolume= ref(0.75)
+    //当前播放歌单
+
+    const songSheetId = ref('')
 
     /**
      * 获取当前播放歌曲在列表中的下标
@@ -160,6 +163,10 @@ export const useMusicStore = defineStore(
     }
 
     function setCurrentSong(data) {
+      if(data.fee===1){
+        ElMessage.warning('当前歌曲需要vip')
+      }
+      // ElMessage()
       currentSong.value = data
     }
 
@@ -194,6 +201,10 @@ export const useMusicStore = defineStore(
        muiscVolume.value = data
     }
 
+    function setSongSheetId(data){
+      songSheetId.value = data
+    }
+
     return {
       currentSong,
       currentTime,
@@ -210,6 +221,7 @@ export const useMusicStore = defineStore(
       hasCurrentSong,
       nextSong,
       prevSong,
+      songSheetId,
       startSong,
       clearCurrentSong,
       clearPlaylist,
@@ -225,7 +237,8 @@ export const useMusicStore = defineStore(
       setPlaylist,
       setPlayHistory,
       setMenuShow,
-      setMusicVolume
+      setMusicVolume,
+      setSongSheetId
     }
   },
   {
