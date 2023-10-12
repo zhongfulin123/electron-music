@@ -36,7 +36,7 @@ withDefaults(
     isDefalut: true
   }
 )
-const emit = defineEmits(['update:modelValue','handleChange'])
+const emit = defineEmits(['update:modelValue', 'handleChange'])
 function handleclick(value) {
   emit('update:modelValue', value)
   emit('handleChange')
@@ -77,8 +77,8 @@ function handleclick(value) {
     padding: 5px 10px;
   }
   .active-item {
-    background-color:#FEF5F5;
-    color:#EC4141 ;
+    background-color: #fef5f5;
+    color: #ec4141;
     border-radius: 20px;
   }
 }

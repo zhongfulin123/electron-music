@@ -18,12 +18,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
-const props = defineProps(["id", "img", "name", "desc"])
+const props = defineProps(['id', 'img', 'name', 'desc'])
 const router = useRouter()
-function onClickCard(){
-router.push(`/playlist/${props.id}`)
+function onClickCard() {
+  router.push(`/playlist/${props.id}`)
 }
 </script>
 

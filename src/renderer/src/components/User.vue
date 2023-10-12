@@ -49,7 +49,7 @@ const userStore = useUserStore()
 const dialogFormVisible = ref(false)
 const userInfo = ref()
 onMounted(() => {
-  const uid =  userStore.uid 
+  const uid = userStore.uid
   if (uid) {
     userdetail(uid)
   }
@@ -68,9 +68,9 @@ const rules = reactive({
 
 /**
  *  验证手机号
- * @param _rule 
- * @param value 
- * @param callback 
+ * @param _rule
+ * @param value
+ * @param callback
  */
 function validatePhone(_rule: any, value: any, callback: any) {
   const reg = /^(?:(?:\+|00)86)?1[3-9]\d{9}$/
@@ -90,12 +90,11 @@ async function userdetail(uid) {
   const res = await getUserDetail(uid)
   if (res.code !== 200) return
   userInfo.value = res.profile
-  userStore.setUserInfo( userInfo.value)
+  userStore.setUserInfo(userInfo.value)
   router.replace({
     path: '/'
   })
 }
-
 
 /**
  * 关闭对话框并重置表单

@@ -1,14 +1,14 @@
-import { app, shell, BrowserWindow,Tray,Menu ,nativeImage} from 'electron'
-import { join ,resolve} from 'path'
+import { app, shell, BrowserWindow, Tray, Menu, nativeImage } from 'electron'
+import { join, resolve } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import logo from '../../resources/logo.png?asset'
 import './drag'
 import './download'
-export let mainWindow:BrowserWindow
+export let mainWindow: BrowserWindow
 function createWindow(): void {
-   mainWindow = new BrowserWindow({
-    minWidth:1042,
-    minHeight:677,
+  mainWindow = new BrowserWindow({
+    minWidth: 1042,
+    minHeight: 677,
     show: false,
     autoHideMenuBar: true,
     frame: false,
@@ -18,10 +18,9 @@ function createWindow(): void {
       sandbox: false
     }
   })
-  mainWindow.on('resize',(_event)=>{
-    mainWindow.webContents.send('resizeWindow',mainWindow.isMaximized())
-   })
- 
+  mainWindow.on('resize', (_event) => {
+    mainWindow.webContents.send('resizeWindow', mainWindow.isMaximized())
+  })
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -49,7 +48,6 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
-
   electronApp.setAppUserModelId('com.electron')
 
   app.on('browser-window-created', (_, window) => {
@@ -63,8 +61,8 @@ app.whenReady().then(() => {
   })
 })
 
-app.on('before-quit',()=>{
-  mainWindow.webContents.send('setpalySaate',false)
+app.on('before-quit', () => {
+  mainWindow.webContents.send('setpalySaate', false)
 })
 
 app.on('window-all-closed', () => {

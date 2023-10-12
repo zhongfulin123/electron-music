@@ -39,11 +39,10 @@ ipcMain.handle('initWatch', async (_evnet, outputPath) => {
   }
 })
 
-function sendLocalDownloadList(path){
+function sendLocalDownloadList(path) {
   const res = findMP3Files([], path)
-  mainWindow.webContents.send('localDownloadList',res)
+  mainWindow.webContents.send('localDownloadList', res)
 }
-
 
 function watchDirName(path) {
   fs.watch(path, (eventType, filename) => {

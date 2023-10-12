@@ -11,20 +11,19 @@
   </div>
 </template>
 
-<script setup lang="ts" >
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
 import PlayIcon from '@renderer/components/play-icon.vue'
 const props = defineProps<{
-  id: string | number,
-  img: string,
-  name: string,
+  id: string | number
+  img: string
+  name: string
   desc: string
 }>()
 const router = useRouter()
-function onClickCard(){
+function onClickCard() {
   router.push(`/playlist/${props.id}`)
 }
-
 </script>
 
 <style lang="scss" scoped>

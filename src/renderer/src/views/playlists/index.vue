@@ -1,12 +1,6 @@
 <template>
-  <div
-    class="playlists"
-    ref="playlists"
-  >
-    <div
-      class="top-play-list-card"
-      v-if="topInfo.id"
-    >
+  <div class="playlists" ref="playlists">
+    <div class="top-play-list-card" v-if="topInfo.id">
       <TopPlaylistCard
         :desc="topInfo.description"
         :id="topInfo.id"
@@ -14,7 +8,13 @@
         :name="topInfo.name"
       />
     </div>
-    <ZTab :list="tabs" v-model="activeTabValue" :isDefalut="false" @handleChange="queryPlaylists" style="margin: 20px 0;"></ZTab>
+    <ZTab
+      :list="tabs"
+      v-model="activeTabValue"
+      :isDefalut="false"
+      @handleChange="queryPlaylists"
+      style="margin: 20px 0"
+    ></ZTab>
     <div class="playlist-cards">
       <PlaylistCard
         :desc="`播放量：${formatNumber(item.playCount)}`"
@@ -38,9 +38,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { getTopPlaylists, getPlaylists } from '@renderer/api'
-import TopPlaylistCard from './top-playlist-card.vue';
+import TopPlaylistCard from './top-playlist-card.vue'
 import PlaylistCard from '@renderer/components/playlist-card.vue'
-import ZTab from '@renderer/components/ZTab.vue';
+import ZTab from '@renderer/components/ZTab.vue'
 import { formatNumber } from '@renderer/utils'
 const topInfo = ref<Record<string, any>>({})
 const list = ref<any[]>([])
@@ -83,23 +83,22 @@ async function queryPlaylists(init: boolean = false) {
     offset: (pagination.value.no - 1) * 50,
     cat: activeTabValue.value
   })
-  if(res.code!==200 )return
+  if (res.code !== 200) return
   list.value = res.playlists
   pagination.value.total = res.total
   console.log(list.value, 'playlists')
 }
-async function queryTopPlaylists(){
-    const res = await getTopPlaylists({
-        limit: 1,
-        cat: activeTabValue.value
-      })
-      if(res.code!==200) return
-      topInfo.value = res?.playlists[0] || {}
+async function queryTopPlaylists() {
+  const res = await getTopPlaylists({
+    limit: 1,
+    cat: activeTabValue.value
+  })
+  if (res.code !== 200) return
+  topInfo.value = res?.playlists[0] || {}
 }
 </script>
 
 <style scoped lang="scss">
-
 .playlists {
   padding: 12px;
 
@@ -117,4 +116,5 @@ async function queryTopPlaylists(){
     justify-content: flex-end;
     margin-bottom: 36px;
   }
-}</style>
+}
+</style>

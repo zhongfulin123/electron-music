@@ -78,12 +78,7 @@
       </div>
       <div>{{ formatTime(currentSong.duration / 1000) }}</div>
     </div>
-    <audio
-      :src="currentSong.url"
-      @ended="end"
-      @timeupdate="updateTime"
-      ref="audio"
-    ></audio>
+    <audio :src="currentSong.url" @ended="end" @timeupdate="updateTime" ref="audio"></audio>
   </div>
 </template>
 
@@ -109,7 +104,6 @@ const {
   isPlayerShow,
   prevSong,
   nextSong
-  
 } = storeToRefs(musicStore)
 const {
   setCurrentTime,
@@ -118,8 +112,7 @@ const {
   setPlaylistShow,
   setPlayerShow,
   startSong,
-  setMusicVolume,
-
+  setMusicVolume
 } = musicStore
 onMounted(() => {
   audio.value.currentTime = currentTime.value
@@ -137,11 +130,11 @@ function togglePlaying() {
 }
 
 async function play() {
-    try {
-      await audio.value.play()
-    } catch (error) {
-       next()
-    }
+  try {
+    await audio.value.play()
+  } catch (error) {
+    next()
+  }
 }
 function pause() {
   audio.value.pause()
@@ -151,10 +144,10 @@ function updateTime(e) {
   setCurrentTime(time)
 }
 function prev() {
-    startSong(prevSong.value)
+  startSong(prevSong.value)
 }
 function next() {
-    startSong(nextSong.value)
+  startSong(nextSong.value)
 }
 function end() {
   next()

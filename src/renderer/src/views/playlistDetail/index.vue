@@ -1,5 +1,5 @@
 <template>
-  <div class="playlist-detail" v-if="playlist.id"  ref="headerRef" >
+  <div class="playlist-detail" v-if="playlist.id" ref="headerRef">
     <DetailHeader :playlist="playlist" :songs="songs" />
     <ZTab :list="tabs" v-model="activeTab" style="margin: 30px 36px 20px 36px"></ZTab>
     <ZTable :tableData="tableData" :columns="columns" :isIndex="true" :atviveId="atviveId">
