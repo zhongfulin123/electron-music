@@ -11,6 +11,18 @@ const api = {
   },
   setpalySaate:(e)=>{
     return ipcRenderer.on('setpalySaate',e)
+  },
+  selectedDirectory:(e)=>{
+    return ipcRenderer.invoke('selectedDirectory',e)
+  },
+  downLoadMusic:(url,outpath)=>{
+    return ipcRenderer.invoke('downLoadMusic',url,outpath)
+  },
+  initWatch:(outpath)=>{
+    return ipcRenderer.invoke('initWatch',outpath)
+  },
+  localDownloadList:(e)=>{
+    return ipcRenderer.on('localDownloadList',e)
   }
 }
 

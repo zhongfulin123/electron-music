@@ -43,9 +43,14 @@ const routes: RouteRecordRaw[] = [
     redirect: '/discovery'
   },
   {
-    path: '/playlist/:id',
+    path: '/playlist/:id?',
     name: 'playlistDetail',
     component: ()=>import('@renderer/views/playlistDetail/index.vue'),
+  },
+  {
+    path: '/download',
+    name: 'download',
+    component: ()=>import('@renderer/views/download/index.vue'),
   },
   ...menuRoutes
 ]

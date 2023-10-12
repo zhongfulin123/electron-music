@@ -18,7 +18,6 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 
 function toPage(menu){
-  console.log(menu)
   if(menu.path){
     router.push({
       path: menu.path

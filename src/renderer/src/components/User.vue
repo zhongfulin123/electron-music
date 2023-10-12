@@ -43,6 +43,7 @@ import { onMounted, reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { loginUser, getUserDetail, logoutUser } from '@renderer/api'
 import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 const loginFormRef = ref<FormInstance>()
 const userStore = useUserStore()
 const dialogFormVisible = ref(false)
@@ -53,6 +54,7 @@ onMounted(() => {
     userdetail(uid)
   }
 })
+const router = useRouter()
 
 const form = ref({
   phone: '',
@@ -89,6 +91,9 @@ async function userdetail(uid) {
   if (res.code !== 200) return
   userInfo.value = res.profile
   userStore.setUserInfo( userInfo.value)
+  router.replace({
+    path: '/'
+  })
 }
 
 
@@ -129,8 +134,12 @@ const handleLogin = async () => {
 /**
  * 退出
  */
+
 async function handleLogout() {
   userStore.setUid('')
+  router.replace({
+    path: '/'
+  })
   await logoutUser()
 }
 </script>

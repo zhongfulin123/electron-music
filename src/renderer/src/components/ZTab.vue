@@ -1,30 +1,50 @@
 <template>
-  <div class="container">
-    <div
-      v-for="(item, index) in list"
-      :key="index"
-      :class="[item.value == modelValue ? 'active-item' : '']"
-      class="item"
-      @click="handleclick(item.value)"
-    >
-      {{ item.label }}
+  <div>
+    <div v-if="isDefalut" class="container-1">
+      <div
+        v-for="(item, index) in list"
+        :key="index"
+        :class="[item.value == modelValue ? 'active-item' : '']"
+        class="item"
+        @click="handleclick(item.value)"
+      >
+        {{ item.label }}
+      </div>
+    </div>
+    <div v-else class="container-2">
+      <div
+        v-for="(item, index) in list"
+        :key="index"
+        :class="[item == modelValue ? 'active-item' : '']"
+        class="item"
+        @click="handleclick(item)"
+      >
+        {{ item }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
- defineProps<{
-  list: any[]
-  modelValue: string | number
-}>()
-const emit = defineEmits(['update:modelValue'])
+withDefaults(
+  defineProps<{
+    list: any[]
+    modelValue: string | number
+    isDefalut?: boolean
+  }>(),
+  {
+    isDefalut: true
+  }
+)
+const emit = defineEmits(['update:modelValue','handleChange'])
 function handleclick(value) {
   emit('update:modelValue', value)
+  emit('handleChange')
 }
 </script>
 
 <style scoped lang="scss">
-.container {
+.container-1 {
   display: flex;
   .item {
     margin-right: 20px;
@@ -33,7 +53,6 @@ function handleclick(value) {
   }
   .active-item {
     font-weight: bold;
-    // transform: scale(1.3);
     font-size: 20px;
     position: relative;
     &::before {
@@ -46,6 +65,21 @@ function handleclick(value) {
       background-color: #ec4141;
       bottom: -5px;
     }
+  }
+}
+.container-2 {
+  display: flex;
+  align-items: center;
+  .item {
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    padding: 5px 10px;
+  }
+  .active-item {
+    background-color:#FEF5F5;
+    color:#EC4141 ;
+    border-radius: 20px;
   }
 }
 </style>

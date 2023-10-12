@@ -3,9 +3,9 @@ import { join ,resolve} from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import logo from '../../resources/logo.png?asset'
 import './drag'
-let mainWindow:BrowserWindow
+import './download'
+export let mainWindow:BrowserWindow
 function createWindow(): void {
-  // Create the browser window.
    mainWindow = new BrowserWindow({
     minWidth:1042,
     minHeight:677,

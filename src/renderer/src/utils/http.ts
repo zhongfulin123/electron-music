@@ -1,6 +1,7 @@
 import axios from 'axios'
 export const http = axios.create({
-  baseURL: 'https://mu-api.yuk0.com/', // 本地地址
+  // baseURL: 'https://mu-api.yuk0.com/', // 线上
+  baseURL: 'http://127.0.0.1:3000/', // 本地地址
   timeout: 10000
 })
 

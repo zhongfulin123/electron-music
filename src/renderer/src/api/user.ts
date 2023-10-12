@@ -7,5 +7,5 @@ export const loginUser = (form):any=>{
  }
 export const getUserDetail = (uid):any => http.get("/user/detail", { params: { uid } })
 
-const PLAYLIST_LIMIT = 1000
-export const getUserPlaylist = (uid):any => http.get("/user/playlist", { params: { uid, limit: PLAYLIST_LIMIT } })
+
+export const getUserPlaylist = (uid):any => http.get("/user/playlist", { params: { uid, limit: 1000 } })
