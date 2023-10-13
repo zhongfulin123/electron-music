@@ -21,10 +21,11 @@ ipcMain.handle('selectedDirectory', async (_evnet) => {
   return false
 })
 
-ipcMain.handle('downLoadMusic', async (_evnet, url, outputPath) => {
+ipcMain.handle('downLoadMusic', async (_evnet, url ,name, outputPath) => {
   try {
     const response = await axios.get(url, { responseType: 'stream' })
-    const writer = fs.createWriteStream(resolve(outputPath, url.split('=').pop()))
+    console.log(`${name}-${url.split('=').pop()}`)
+    const writer = fs.createWriteStream(resolve(outputPath,`${name}-${url.split('=').pop()}`))
 
     await pipelineAsync(response.data, writer)
   } catch (error) {

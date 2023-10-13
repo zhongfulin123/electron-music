@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import {playModeMap, getSongImg } from '@renderer/utils'
 import { ElMessage } from 'element-plus'
+import { checkMusic } from '@renderer/api'
 function getRandomIndex(playlist, currentIndex) {
   // 防止无限循环
   if (playlist.length === 1) {
@@ -162,11 +163,10 @@ export const useMusicStore = defineStore(
       }
     }
 
-    function setCurrentSong(data) {
-      if(data.fee===1){
-        ElMessage.warning('当前歌曲需要vip')
-      }
-      // ElMessage()
+    async function setCurrentSong(data) {
+      console.log(data)
+      const res =await checkMusic(data.id)
+      if(!(res.success&&(data.fee==8 || data.fee===0)))ElMessage.warning(res.message==='ok'? '当前歌曲需要vip': res.message)
       currentSong.value = data
     }
 

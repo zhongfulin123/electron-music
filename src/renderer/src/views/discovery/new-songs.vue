@@ -51,7 +51,7 @@ function onClickSong(listIndex, index) {
   startSong(nomalizedSong)
   setPlaylist(normalizedSongs.value)
 }
-function nomalizeSong(song) {
+function nomalizeSong(item) {
   const {
     id,
     name,
@@ -62,7 +62,7 @@ function nomalizeSong(song) {
       duration
     },
     ...res
-  } = song
+  } = item
   return createSong({
     res,
     id,
@@ -70,6 +70,7 @@ function nomalizeSong(song) {
     img: blurPicUrl,
     artists,
     duration,
+    ...item.song,
     mvId: mvid
   })
 }

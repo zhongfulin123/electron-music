@@ -42,9 +42,12 @@
           <div v-if="items.slotName" class="u-line-1">
             <slot :name="items.slotName" :row="record"></slot>
           </div>
-          <div v-else-if="items.render" v-html="items.render(record)" class="u-line-1"></div>
+          <div v-else-if="items.render" v-html="items.render(record)" class="u-line-1">
+          
+          </div>
           <div v-else class="u-line-1">
-            {{ record[items.value] }}
+            <div v-if="record?.isSearch" v-html="record[items.searchValue]" class="u-line-1"></div>
+            <div v-else class="u-line-1">{{ record[items.value] }}</div> 
           </div>
         </div>
         <div></div>
@@ -88,6 +91,7 @@ function handleDbClick(record) {
   .table_tr {
     display: flex;
     padding: 0 36px;
+    cursor: default;
   }
   .table_tr-doublle {
     background: var(--table-tr-bg);

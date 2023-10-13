@@ -7,7 +7,7 @@
     <template #name="{ row }">
       <div>
         <span
-          :style="{ color: currentSong.id === row.id && 'downLoad' === songSheetId ? 'red' : '' }"
+          :style="{ color: currentSong.id === row.id && 'downLoad' === songSheetId ? '#EC4141' : '' }"
         >
           {{ row.name }}</span
         >

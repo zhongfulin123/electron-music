@@ -13,7 +13,7 @@ onMounted(()=>{
 })
 })
 async function genSonglist(playlist) {
-  const trackIds = playlist.map(item=>item.split('.')[0])
+  const trackIds = playlist.map(item=>item.split('-')[1].split('.')[0])
   const songDetails = await getSongDetail(trackIds.slice(0, trackIds.length))
   const result = songDetails.songs?.map(({ id, name, al, ar, mv, dt, ...res }) =>
     createSong({
@@ -28,7 +28,6 @@ async function genSonglist(playlist) {
     })
   )
   globalStore.setDownList(result)
-  console.log(result)
 }
 </script>
 

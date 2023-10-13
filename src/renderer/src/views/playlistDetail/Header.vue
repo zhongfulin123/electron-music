@@ -5,6 +5,7 @@
     </div>
     <div class="content">
       <div class="title-wrap">
+        <span  style="border:  1px solid red;padding: 1px 3px;font-size: 14px;color: red;margin-right: 10px;border-radius: 3px;">歌单</span>
         <p class="title">{{ playlist.name }}</p>
       </div>
       <div class="creator-wrap">
@@ -19,8 +20,8 @@
         </NButton>
       </div>
       <div class="desc-wrap">
-        <p class="desc" v-if="tagsText">
-          <span>标签：{{ tagsText }}</span>
+        <p class="desc" v-if="playlist.trackCount">
+          <span>歌曲:{{ formatNumber(playlist.trackCount) }}</span>  <span style="margin-left: 20px;">播放:{{ formatNumber(playlist.playCount)}}</span>
         </p>
         <p class="desc" v-if="playlist.description">
           <span class="value">简介：{{ playlist.description }}</span>
@@ -33,8 +34,7 @@
 <script setup lang="ts">
 import NButton from '@renderer/components/NButton.vue'
 import { useMusicStore } from '@renderer/store/music'
-import { computed } from 'vue'
-import { formatDate } from '@renderer/utils'
+import { formatDate,formatNumber } from '@renderer/utils'
 const musicStore = useMusicStore()
 const { setPlaylist, startSong } = musicStore
 const props = defineProps({
@@ -51,9 +51,6 @@ function playAll() {
   setPlaylist(props.songs)
   startSong(props.songs[0])
 }
-const tagsText = computed(() => {
-  return props.playlist.tags.join('/')
-})
 </script>
 
 <style lang="scss" scoped>
@@ -74,7 +71,6 @@ const tagsText = computed(() => {
   .content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     flex: 1;
 
     .title-wrap {
@@ -83,14 +79,14 @@ const tagsText = computed(() => {
       margin-bottom: 12px;
 
       .title {
-        font-size: $font-size-lg;
+        font-size: 18px;
+        font-weight: bold;
         color: var(--font-color-white);
       }
     }
 
     .action-wrap {
-      margin-bottom: 18px;
-
+      margin-bottom: 15px;
       .button {
         background: #f95043;
         background: linear-gradient(to right, #fa5143, #f44d41, #d53b32);
@@ -99,10 +95,11 @@ const tagsText = computed(() => {
         display: flex;
         max-width: fit-content;
         align-items: center;
+        border-radius: 20px;
         .icon {
           margin-right: 4px;
         }
-
+  
         .middle {
           vertical-align: middle;
         }
@@ -129,7 +126,6 @@ const tagsText = computed(() => {
         font-size: $font-size-sm;
       }
     }
-
     .desc {
       margin-bottom: 8px;
 

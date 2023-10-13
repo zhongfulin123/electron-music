@@ -53,7 +53,7 @@ function handleclick(value) {
   }
   .active-item {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     position: relative;
     &::before {
       position: absolute;

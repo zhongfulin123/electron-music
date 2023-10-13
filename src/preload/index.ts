@@ -15,8 +15,8 @@ const api = {
   selectedDirectory:(e)=>{
     return ipcRenderer.invoke('selectedDirectory',e)
   },
-  downLoadMusic:(url,outpath)=>{
-    return ipcRenderer.invoke('downLoadMusic',url,outpath)
+  downLoadMusic:(url,name,outpath)=>{
+    return ipcRenderer.invoke('downLoadMusic',url,name,outpath)
   },
   initWatch:(outpath)=>{
     return ipcRenderer.invoke('initWatch',outpath)
