@@ -42,7 +42,7 @@ export default {
 
   //input
   ['--input-color']: '#4a4a4a',
-  ['--input-bgcolor']: '#EDEDED',
+  ['--input-bgcolor']: '#F7F7F7',
 
   //button
   ['--button-border-color']: '#D9D9D9',

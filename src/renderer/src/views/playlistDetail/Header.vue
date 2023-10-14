@@ -56,7 +56,8 @@ function playAll() {
 <style lang="scss" scoped>
 .header {
   display: flex;
-  margin: 36px;
+  padding: 36px;
+  box-sizing: border-box;
   .img-wrap {
     width: 200px;
     height: 200px;

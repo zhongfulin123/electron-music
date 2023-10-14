@@ -5,15 +5,22 @@
       <ZTab :list="tabs" v-model="activeTab"></ZTab>
       <el-input
         v-model="searchText"
-        style="width: 150px;"
+        style="width: 150px"
         size="small"
         placeholder="搜索歌单音乐"
-        clearable 
+        clearable
         :prefix-icon="Search"
+        v-if="activeTab == 1"
       />
     </div>
-   
-    <ZTable :tableData="filteredSongs" :columns="columns" :isIndex="true" :atviveId="atviveId" v-if="activeTab==1">
+
+    <ZTable
+      :tableData="filteredSongs"
+      :columns="columns"
+      :isIndex="true"
+      :atviveId="atviveId"
+      v-if="activeTab == 1"
+    >
       <template #name="{ row }">
         <div class="u-line-1" style="display: flex; align-items: center">
           <div
@@ -24,8 +31,8 @@
               'max-width': 'fit-content'
             }"
           >
-          <div v-if="row?.isSearch" v-html="row.searchName" class="u-line-1" ></div>
-           <div v-else  class="u-line-1" >{{ row.name }}</div>   
+            <div v-if="row?.isSearch" v-html="row.searchName" class="u-line-1"></div>
+            <div v-else class="u-line-1">{{ row.name }}</div>
           </div>
           <div style="display: flex; flex: 1; height: 100%" v-if="row.mvId || row.fee">
             <div v-if="row.mvId" class="label">mv</div>
@@ -37,28 +44,34 @@
         <Icon type="xiazai" @click.stop="download(row)"></Icon>
       </template>
     </ZTable>
-    <div class="container-comment" v-if="activeTab==2" >
-      <div v-if="hotComments.length>0&&pagination.no===1">
+    <div class="container-comment" v-if="activeTab == 2" ref="commentRef">
+      <div v-if="hotComments.length > 0 && pagination.no === 1">
         <div class="title">精彩评论</div>
-       <Comment  :commentList="hotComments"></Comment>
+        <Comment :commentList="hotComments"></Comment>
       </div>
-      <div v-if="playlistComment.length>0" :style="{'margin-top': hotComments.length>0&&pagination.no===1?'50px': ''}">
+      <div
+        v-if="playlistComment.length > 0"
+        :style="{ 'margin-top': hotComments.length > 0 && pagination.no === 1 ? '50px' : '' }"
+      >
         <div class="title">最新评论({{ pagination.total }})</div>
-       <Comment  :commentList="playlistComment"></Comment>
+        <Comment :commentList="playlistComment"></Comment>
       </div>
-      <div style="display: flex;justify-content: center;margin-top: 20px;">
-      <el-pagination
-      v-model:current-page="pagination.no"
-      v-model:page-size="pagination.size"
-      background="background"
-      layout="prev, pager, next"
-      :total="pagination.total"
-      @current-change="queryPlaylistComment($route.params.id)"
-      @size-change="queryPlaylistComment($route.params.id)"
-    />
+      <div style="display: flex; justify-content: center; margin-top: 20px">
+        <el-pagination
+          v-if="hotComments.length > 0 || playlistComment.length > 0"
+          v-model:current-page="pagination.no"
+          v-model:page-size="pagination.size"
+          background="background"
+          layout="prev, pager, next"
+          :total="pagination.total"
+          @current-change="queryPlaylistComment($route.params.id)"
+          @size-change="queryPlaylistComment($route.params.id)"
+        />
+      </div>
     </div>
-    </div>
-
+    <div  v-if="activeTab == 3" >
+      <Subscribers ></Subscribers>
+    </div> 
   </div>
   <div class="box-empty" v-else>
     <el-empty description="暂无数据" />
@@ -68,6 +81,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import DetailHeader from './Header.vue'
+import Subscribers from './subscribers.vue'
 import { createSong } from '@renderer/utils'
 import ZTab from '@renderer/components/ZTab.vue'
 import ZTable from '@renderer/components/ZTable.vue'
@@ -76,11 +90,11 @@ import { useMusicStore } from '@renderer/store/music'
 import { useGlobalStore } from '@renderer/store/global'
 import { checkMusic } from '@renderer/api'
 import { storeToRefs } from 'pinia'
-import {  Search } from '@element-plus/icons-vue'
+import { Search } from '@element-plus/icons-vue'
 const { currentSong, songSheetId } = storeToRefs(useMusicStore())
 const { muicPath } = storeToRefs(useGlobalStore())
 const playlist = ref<Record<string, any>>({})
-import { getSongDetail, getListDetail,getPlaylistComment } from '@renderer/api'
+import { getSongDetail, getListDetail, getPlaylistComment } from '@renderer/api'
 import { computed, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import Comment from '@renderer/components/Comment.vue'
@@ -88,7 +102,7 @@ import _ from 'lodash'
 const activeTab = ref(1)
 const atviveId = ref('')
 
-const searchText=ref('')
+const searchText = ref('')
 
 const tabs = ref([
   {
@@ -98,6 +112,10 @@ const tabs = ref([
   {
     label: '评论',
     value: '2'
+  },
+  {
+    label: '收藏者',
+    value: '3'
   }
 ])
 const tableData = ref([])
@@ -141,14 +159,16 @@ const columns = ref([
 
 const route = useRoute()
 const headerRef = ref()
+const commentRef = ref()
 const copyTabs = _.cloneDeep(tabs.value)
 watch(
   () => route.params.id,
   (newval) => {
     if (headerRef.value) {
-      headerRef.value.scrollIntoView({ behavior: 'smooth' })
+      headerRef.value.scrollIntoView()
     }
     atviveId.value = newval as string
+    activeTab.value = 1
     initPlayList(newval)
     queryPlaylistComment(newval)
   },
@@ -162,20 +182,21 @@ watch(
  */
 const playlistComment = ref([])
 const hotComments = ref([])
- async function queryPlaylistComment(newval){
- const  res = await getPlaylistComment({
-    id:newval,
-    offset:(pagination.value.no - 1) * 50,
+async function queryPlaylistComment(newval) {
+  if (commentRef.value)  commentRef.value.scrollIntoView()
+  const res = await getPlaylistComment({
+    id: newval,
+    offset: (pagination.value.no - 1) * 50
   })
-  if(res.code!==200) return 
+  if (res.code !== 200) return
   playlistComment.value = res.comments
-  if(pagination.value.no ===1) hotComments.value = res.hotComments
+  if (pagination.value.no === 1) hotComments.value = res.hotComments
   pagination.value.total = res.total
   tabs.value[1].label = `${copyTabs[1].label}(${res.total}) `
 }
 
 /**
- * 
+ *
  * @param newval 当前歌单id
  */
 async function initPlayList(newval) {
@@ -188,7 +209,7 @@ async function initPlayList(newval) {
   genSonglist(playlist.value)
 }
 /**
- * 
+ *
  * @param playlist 歌单列表
  */
 async function genSonglist(playlist) {
@@ -209,35 +230,38 @@ async function genSonglist(playlist) {
   tableData.value = result
 }
 /**
- * 
+ *
  * @param result 替换的字符串
  * @param keyword 搜索关键字
  */
 
-function useBrightenKeyword(result, keyword) {
+function useBrightenKeyword(result:string, keyword) {
   const Reg = new RegExp(keyword, 'ig')
-  let res = '';
+ const matchingCharacters = result.match(Reg)
+  let res = ''
   if (result) {
-    res = result.replace(Reg, `<span style="color: #507DAF;">${keyword}</span>`)
+    res = result.replace(Reg, `<span style="color: #507DAF;">${matchingCharacters?matchingCharacters[0]: ''}</span>`)
     return res
   }
   return result
 }
 
-const filteredSongs = computed(()=>{
-  return searchText.value?tableData.value.filter(({ name, artistsText, albumName }) =>
-        `${name}${artistsText}${albumName}`
-          .toLowerCase()
-          .includes(searchText.value.toLowerCase()),
-      ).map((item:any)=>{
-        return {
-        ...item,
-        isSearch:true,
-        searchName: useBrightenKeyword(item.name,searchText.value),
-        searchArtistsText: useBrightenKeyword(item.artistsText,searchText.value),
-        searchAlbumName: useBrightenKeyword(item.albumName,searchText.value)
-        }
-      }) : tableData.value
+const filteredSongs = computed(() => {
+  return searchText.value
+    ? tableData.value
+        .filter(({ name, artistsText, albumName }) =>
+          `${name}${artistsText}${albumName}`.toLowerCase().includes(searchText.value.toLowerCase())
+        )
+        .map((item: any) => {
+          return {
+            ...item,
+            isSearch: true,
+            searchName: useBrightenKeyword(item.name, searchText.value),
+            searchArtistsText: useBrightenKeyword(item.artistsText, searchText.value),
+            searchAlbumName: useBrightenKeyword(item.albumName, searchText.value)
+          }
+        })
+    : tableData.value
 })
 
 /**
@@ -245,22 +269,22 @@ const filteredSongs = computed(()=>{
  */
 const router = useRouter()
 async function download(row) {
-  if(!muicPath.value){
+  if (!muicPath.value) {
     ElMessage({
-      duration:1000,
+      duration: 1000,
       type: 'warning',
       message: '请设置下载目录'
     })
     setTimeout(() => {
       router.push({
-      path: '/download'
-    })
-    }, 500);
-    
+        path: '/download'
+      })
+    }, 500)
+
     return
-  } 
+  }
   const res = await checkMusic(row.id)
-  if (!(res.success && (row.fee == 8 || row.fee === 0))){
+  if (!(res.success && (row.fee == 8 || row.fee === 0))) {
     ElMessage.warning(res.message === 'ok' ? '当前歌曲需要vip' : res.message)
     return
   }
@@ -270,11 +294,15 @@ async function download(row) {
 </script>
 
 <style lang="scss" scoped>
+:deep(.el-input--small .el-input__wrapper) {
+  background-color: var(--input-bgcolor);
+  box-shadow:none;
+}
 .u-line-1 {
   @include text-ellipsis;
 }
 :deep(.el-pagination.is-background .el-pager li.is-active) {
-  background-color: #EC4141;
+  background-color: #ec4141;
 }
 .box-empty {
   display: flex;
@@ -297,15 +325,15 @@ async function download(row) {
     font-size: 12px;
     cursor: pointer;
   }
-  .search-box{
-    margin: 30px 36px 20px 36px;
+  .search-box {
+    margin: 0px 36px 20px 36px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .container-comment{
+  .container-comment {
     margin: 0 36px;
-    .title{
+    .title {
       font-size: 15px;
       font-weight: bold;
     }

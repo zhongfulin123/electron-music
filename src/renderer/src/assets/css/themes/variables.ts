@@ -44,7 +44,7 @@ export default {
 
   //input
   ['--input-color']: '#b1b1b1',
-  ['--input-bgcolor']: '#4B4B4B',
+  ['--input-bgcolor']: '#323232',
 
   //button
   ['--button-border-color']: '#454545',
