@@ -98,7 +98,6 @@ function goMv() {
     margin-top: 4px;
     @include text-ellipsis;
     font-size: $font-size-sm;
-    color: var(--font-color-grey-shallow);
   }
 }
 </style>

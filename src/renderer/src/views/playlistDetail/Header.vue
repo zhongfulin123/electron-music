@@ -5,7 +5,17 @@
     </div>
     <div class="content">
       <div class="title-wrap">
-        <span  style="border:  1px solid red;padding: 1px 3px;font-size: 14px;color: red;margin-right: 10px;border-radius: 3px;">歌单</span>
+        <span
+          style="
+            border: 1px solid red;
+            padding: 1px 3px;
+            font-size: 14px;
+            color: red;
+            margin-right: 10px;
+            border-radius: 3px;
+          "
+          >歌单</span
+        >
         <p class="title">{{ playlist.name }}</p>
       </div>
       <div class="creator-wrap">
@@ -21,7 +31,8 @@
       </div>
       <div class="desc-wrap">
         <p class="desc" v-if="playlist.trackCount">
-          <span>歌曲:{{ formatNumber(playlist.trackCount) }}</span>  <span style="margin-left: 20px;">播放:{{ formatNumber(playlist.playCount)}}</span>
+          <span>歌曲:{{ formatNumber(playlist.trackCount) }}</span>
+          <span style="margin-left: 20px">播放:{{ formatNumber(playlist.playCount) }}</span>
         </p>
         <p class="desc" v-if="playlist.description">
           <span class="value">简介：{{ playlist.description }}</span>
@@ -34,7 +45,7 @@
 <script setup lang="ts">
 import NButton from '@renderer/components/NButton.vue'
 import { useMusicStore } from '@renderer/store/music'
-import { formatDate,formatNumber } from '@renderer/utils'
+import { formatDate, formatNumber } from '@renderer/utils'
 const musicStore = useMusicStore()
 const { setPlaylist, startSong } = musicStore
 const props = defineProps({
@@ -82,15 +93,13 @@ function playAll() {
       .title {
         font-size: 18px;
         font-weight: bold;
-        color: var(--font-color-white);
       }
     }
 
     .action-wrap {
       margin-bottom: 15px;
       .button {
-        background: #f95043;
-        background: linear-gradient(to right, #fa5143, #f44d41, #d53b32);
+        background: #ec4141;
         color: #fbdfdd;
         border: none;
         display: flex;
@@ -100,7 +109,7 @@ function playAll() {
         .icon {
           margin-right: 4px;
         }
-  
+
         .middle {
           vertical-align: middle;
         }

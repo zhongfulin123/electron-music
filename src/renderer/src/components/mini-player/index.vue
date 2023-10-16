@@ -1,4 +1,3 @@
-// 底部播放栏组件
 <template>
   <div class="mini-player" id="mini-player">
     <!-- 歌曲内容 -->
@@ -286,7 +285,7 @@ watch(
       .bottom {
         margin-top: 5px;
         @include text-ellipsis;
-        color: var(--font-color-grey);
+
       }
     }
   }

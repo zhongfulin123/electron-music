@@ -68,7 +68,6 @@ defineProps<{
 
     .song-name {
       @include text-ellipsis;
-      color: var(--font-color-white);
     }
 
     .singer {

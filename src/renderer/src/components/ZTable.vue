@@ -23,7 +23,7 @@
         ]"
         @dblclick="handleDbClick(record)"
       >
-        <div v-if="isIndex" style="min-width: 30px; line-height: 40px">
+        <div v-if="isIndex" style="min-width: 30px;">
           <Icon
             type="lababofang"
             color="#FB004A"
@@ -90,8 +90,9 @@ function handleDbClick(record) {
   font-size: 14px;
   .table_tr {
     display: flex;
-    padding: 0 36px;
+    padding: 10px 36px;
     cursor: default;
+    align-items: center;
   }
   .table_tr-doublle {
     background: var(--table-tr-bg);
@@ -102,12 +103,10 @@ function handleDbClick(record) {
   .table_th {
     margin: 0 10px;
     @include text-ellipsis;
-    line-height: 40px;
   }
   .table_td {
     margin: 0 10px;
     @include text-ellipsis;
-    line-height: 40px;
   }
 }
 </style>

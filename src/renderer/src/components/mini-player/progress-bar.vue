@@ -112,7 +112,6 @@ watch(
   .bar-inner {
     position: relative;
     height: 3px;
-    background: var(--progress-bgcolor);
 
     .progress {
       position: absolute;

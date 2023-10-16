@@ -69,9 +69,21 @@
         />
       </div>
     </div>
-    <div  v-if="activeTab == 3" >
-      <Subscribers ></Subscribers>
-    </div> 
+    <div v-if="activeTab == 3">
+      <Subscribers :list="SubscriberLIst"></Subscribers>
+      <div style="display: flex; justify-content: center; margin-top: 20px">
+        <el-pagination
+          v-if="paginationSub.total > 60"
+          v-model:current-page="paginationSub.no"
+          v-model:page-size="paginationSub.size"
+          background="background"
+          layout="prev, pager, next"
+          :total="paginationSub.total"
+          @current-change="queryPlaylistSubscribers($route.params.id)"
+          @size-change="queryPlaylistSubscribers($route.params.id)"
+        />
+      </div>
+    </div>
   </div>
   <div class="box-empty" v-else>
     <el-empty description="暂无数据" />
@@ -88,13 +100,18 @@ import ZTable from '@renderer/components/ZTable.vue'
 import { formatTime } from '@renderer/utils'
 import { useMusicStore } from '@renderer/store/music'
 import { useGlobalStore } from '@renderer/store/global'
-import { checkMusic } from '@renderer/api'
 import { storeToRefs } from 'pinia'
 import { Search } from '@element-plus/icons-vue'
 const { currentSong, songSheetId } = storeToRefs(useMusicStore())
 const { muicPath } = storeToRefs(useGlobalStore())
 const playlist = ref<Record<string, any>>({})
-import { getSongDetail, getListDetail, getPlaylistComment } from '@renderer/api'
+import {
+  getSongDetail,
+  getListDetail,
+  getPlaylistComment,
+  getPlaylistSubscribers,
+  checkMusic
+} from '@renderer/api'
 import { computed, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import Comment from '@renderer/components/Comment.vue'
@@ -122,6 +139,11 @@ const tableData = ref([])
 const pagination = ref({
   total: 0,
   size: 50,
+  no: 1
+})
+const paginationSub = ref({
+  total: 0,
+  size: 60,
   no: 1
 })
 const columns = ref([
@@ -171,11 +193,31 @@ watch(
     activeTab.value = 1
     initPlayList(newval)
     queryPlaylistComment(newval)
+    queryPlaylistSubscribers(newval)
   },
   {
     immediate: true
   }
 )
+
+/***
+ *
+ * 获取收藏者
+ */
+const SubscriberLIst = ref([])
+async function queryPlaylistSubscribers(newval) {
+  if (headerRef.value) {
+    headerRef.value.scrollIntoView()
+  }
+  const res = await getPlaylistSubscribers({
+    id: newval,
+    limit: paginationSub.value.size,
+    offset: (paginationSub.value.no - 1) * paginationSub.value.size
+  })
+  if (res.code !== 200) return
+  SubscriberLIst.value = res.subscribers
+  paginationSub.value.total = res.total
+}
 
 /**
  * 获取歌单评论
@@ -183,10 +225,10 @@ watch(
 const playlistComment = ref([])
 const hotComments = ref([])
 async function queryPlaylistComment(newval) {
-  if (commentRef.value)  commentRef.value.scrollIntoView()
+  if (commentRef.value) commentRef.value.scrollIntoView()
   const res = await getPlaylistComment({
     id: newval,
-    offset: (pagination.value.no - 1) * 50
+    offset: (pagination.value.no - 1) * pagination.value.size
   })
   if (res.code !== 200) return
   playlistComment.value = res.comments
@@ -235,12 +277,15 @@ async function genSonglist(playlist) {
  * @param keyword 搜索关键字
  */
 
-function useBrightenKeyword(result:string, keyword) {
+function useBrightenKeyword(result: string, keyword) {
   const Reg = new RegExp(keyword, 'ig')
- const matchingCharacters = result.match(Reg)
+  const matchingCharacters = result.match(Reg)
   let res = ''
   if (result) {
-    res = result.replace(Reg, `<span style="color: #507DAF;">${matchingCharacters?matchingCharacters[0]: ''}</span>`)
+    res = result.replace(
+      Reg,
+      `<span style="color: #507DAF;">${matchingCharacters ? matchingCharacters[0] : ''}</span>`
+    )
     return res
   }
   return result
@@ -296,7 +341,7 @@ async function download(row) {
 <style lang="scss" scoped>
 :deep(.el-input--small .el-input__wrapper) {
   background-color: var(--input-bgcolor);
-  box-shadow:none;
+  box-shadow: none;
 }
 .u-line-1 {
   @include text-ellipsis;
@@ -313,7 +358,6 @@ async function download(row) {
   height: 100%;
 }
 .playlist-detail {
-  padding-bottom: 20px;
   .label {
     border: 1px solid #ed5454;
     padding: 0 4px;
@@ -321,7 +365,6 @@ async function download(row) {
     margin-left: 5px;
     height: 15px;
     line-height: 15px;
-
     font-size: 12px;
     cursor: pointer;
   }

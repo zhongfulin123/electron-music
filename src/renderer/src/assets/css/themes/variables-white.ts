@@ -1,66 +1,35 @@
 export default {
+  // 全局样式
   ['--body-bgcolor']: '#fff',
   ['--light-bgcolor']: '#f5f5f5',
-
   ['--font-color']: '#4a4a4a',
-  ['--font-color-shallow']: '#404040',
-  ['--font-color-white']: '#333333',
-  ['--font-color-grey']: '#5c5c5c',
-  ['--font-color-grey2']: '#909090',
-  ['--font-color-grey-shallow']: '#BEBEBE',
-  ['--border']: '#f2f2f1',
-  ['--scrollbar-color']: '#D0D0D0',
-  ['--round-hover-bgcolor']: '#EBEBEB',
-  ['--stripe-bg']: '#FAFAFA',
-  ['--shallow-theme-bgcolor']: '#fdf6f5',
-  ['--shallow-theme-bgcolor-hover']: '#FBEDEC',
 
-  //header
+  //头部区域
   ['--header-bgcolor']: '#F5F5F5',
   ['--header-font-color']: '#4a4a4a',
-  ['--header-input-color']: '#4a4a4a',
-  ['--header-input-bgcolor']: '#EDEDED',
-  ['--header-input-placeholder-color']: '#BEBEBE',
 
-  // menu
+  // 左侧菜单
   ['--menu-bgcolor']: '#FFFFFF',
   ['--menu-item-hover-bg']: '#F6F6F7',
   ['--menu-item-active-bg']: '#F6F6F7',
   ['--menu-item-border-bg']: '#E0E0E0',
+  ['--menu-item-title-color']: '#999999',
 
-  //player
-  ['--player-bgcolor']: '#F5F5F5',
-
-  //playlist
-  ['--playlist-bgcolor']: '#fff',
-  ['--playlist-hover-bgcolor']: '#EFEFEF',
-
-  //search
-  ['--search-bgcolor']: '#fff',
-  //progress
-  ['--progress-bgcolor']: '#F5F5F5',
-
-  //input
-  ['--input-color']: '#4a4a4a',
+  //搜索框
   ['--input-bgcolor']: '#F7F7F7',
 
-  //button
+  //播放全部按钮
   ['--button-border-color']: '#D9D9D9',
   ['--button-hover-bgcolor']: '#F5F5F5',
 
-  //tab
-  ['--tab-item-color']: '#7F7F81',
-  ['--tab-item-hover-color']: '#343434',
-  ['--tab-item-active-color']: '#000',
+  //最新音乐tab
+  ['--tab-item-active-color']: '#333333',
+  ['--tab-item-color']: '#666666',
 
-  //modal
-  ['--modal-bg-color']: '#F5F5F5',
-  // prompt
-  ['--prompt-bg-color']: '#fff',
-  //song-detail
-  ['--song-shallow-grey-bg']: '#E6E5E6',
-  
   //歌曲列表
   ['--table-tr-bg']: '#FAFAFA',
   ['--table-tr-bg-active']: '#E5E5E5',
+  // 评论
+  ['--comment-bg']: '#F5F5F5',
+  ['--comment-bg-line']: '#F2F2F2'
 }

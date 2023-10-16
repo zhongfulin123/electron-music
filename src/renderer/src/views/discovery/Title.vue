@@ -15,7 +15,6 @@
 
   .title {
     font-size: $font-size-title;
-    color: var(--font-color-white);
   }
 }
 </style>

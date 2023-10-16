@@ -96,12 +96,11 @@ async function queyUserPlayList() {
 
 <style scoped lang="scss">
 .menu {
-  width: 200px;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   background-color: var(--menu-bgcolor);
-  border-right: 1px solid var(--menu-item-border-bg);
 
   .menu-wrap {
     flex: 1;

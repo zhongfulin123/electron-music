@@ -13,7 +13,7 @@
         </div>
       </div>
       <template #reference>
-        <Icon :backdrop="true" slot="reference" type="skin" :size="20" />
+        <Icon slot="reference" type="skin" :size="20" />
       </template>
     </el-popover>
   </div>
