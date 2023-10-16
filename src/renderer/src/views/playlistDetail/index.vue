@@ -94,17 +94,15 @@
 import { useRoute, useRouter } from 'vue-router'
 import DetailHeader from './Header.vue'
 import Subscribers from './subscribers.vue'
-import { createSong } from '@renderer/utils'
 import ZTab from '@renderer/components/ZTab.vue'
 import ZTable from '@renderer/components/ZTable.vue'
-import { formatTime } from '@renderer/utils'
+import { formatTime, createSong } from '@renderer/utils'
 import { useMusicStore } from '@renderer/store/music'
 import { useGlobalStore } from '@renderer/store/global'
 import { storeToRefs } from 'pinia'
 import { Search } from '@element-plus/icons-vue'
 const { currentSong, songSheetId } = storeToRefs(useMusicStore())
 const { muicPath } = storeToRefs(useGlobalStore())
-const playlist = ref<Record<string, any>>({})
 import {
   getSongDetail,
   getListDetail,
@@ -118,9 +116,7 @@ import Comment from '@renderer/components/Comment.vue'
 import _ from 'lodash'
 const activeTab = ref(1)
 const atviveId = ref('')
-
 const searchText = ref('')
-
 const tabs = ref([
   {
     label: '歌曲列表',
@@ -135,17 +131,8 @@ const tabs = ref([
     value: '3'
   }
 ])
-const tableData = ref([])
-const pagination = ref({
-  total: 0,
-  size: 50,
-  no: 1
-})
-const paginationSub = ref({
-  total: 0,
-  size: 60,
-  no: 1
-})
+
+const copyTabs = _.cloneDeep(tabs.value)
 const columns = ref([
   {
     label: '操作',
@@ -178,33 +165,17 @@ const columns = ref([
     render: (row) => `<div>${formatTime(row.durationSecond)}</div>`
   }
 ])
-
-const route = useRoute()
-const headerRef = ref()
-const commentRef = ref()
-const copyTabs = _.cloneDeep(tabs.value)
-watch(
-  () => route.params.id,
-  (newval) => {
-    if (headerRef.value) {
-      headerRef.value.scrollIntoView()
-    }
-    atviveId.value = newval as string
-    activeTab.value = 1
-    initPlayList(newval)
-    queryPlaylistComment(newval)
-    queryPlaylistSubscribers(newval)
-  },
-  {
-    immediate: true
-  }
-)
-
 /***
  *
  * 获取收藏者
  */
+const headerRef = ref()
 const SubscriberLIst = ref([])
+const paginationSub = ref({
+  total: 0,
+  size: 60,
+  no: 1
+})
 async function queryPlaylistSubscribers(newval) {
   if (headerRef.value) {
     headerRef.value.scrollIntoView()
@@ -222,8 +193,14 @@ async function queryPlaylistSubscribers(newval) {
 /**
  * 获取歌单评论
  */
+const commentRef = ref()
 const playlistComment = ref([])
 const hotComments = ref([])
+const pagination = ref({
+  total: 0,
+  size: 50,
+  no: 1
+})
 async function queryPlaylistComment(newval) {
   if (commentRef.value) commentRef.value.scrollIntoView()
   const res = await getPlaylistComment({
@@ -241,6 +218,7 @@ async function queryPlaylistComment(newval) {
  *
  * @param newval 当前歌单id
  */
+const playlist = ref<Record<string, any>>({})
 async function initPlayList(newval) {
   const res = await getListDetail({ id: newval })
   if (res.code !== 200) {
@@ -254,6 +232,7 @@ async function initPlayList(newval) {
  *
  * @param playlist 歌单列表
  */
+const tableData = ref([])
 async function genSonglist(playlist) {
   const trackIds = playlist.trackIds.map(({ id }) => id)
   const songDetails = await getSongDetail(trackIds.slice(0, trackIds.length))
@@ -336,6 +315,27 @@ async function download(row) {
 
   window.api.downLoadMusic(row.url, row.name, muicPath.value)
 }
+
+/**
+ * 监听路由值变化重新获取数据
+ */
+const route = useRoute()
+watch(
+  () => route.params.id,
+  (newval) => {
+    if (headerRef.value) {
+      headerRef.value.scrollIntoView()
+    }
+    atviveId.value = newval as string
+    activeTab.value = 1
+    initPlayList(newval)
+    queryPlaylistComment(newval)
+    queryPlaylistSubscribers(newval)
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 
 <style lang="scss" scoped>

@@ -72,7 +72,7 @@ const routerViewCls = computed(() => {
       flex: 1;
       overflow-y: auto;
       height: 90%;
-      padding-bottom: 80px;
+      padding-bottom: 50px;
       .router-view-center {
         max-width: $center-content-max-width;
         margin: auto;

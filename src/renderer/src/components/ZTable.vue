@@ -1,6 +1,6 @@
 <template>
   <div class="table_wrapper">
-    <div class="table_tr">
+    <div class="table_tr" v-if="isheader">
       <div v-if="isIndex" style="min-width: 30px"></div>
       <div
         v-for="(item, index) in columns"
@@ -23,7 +23,7 @@
         ]"
         @dblclick="handleDbClick(record)"
       >
-        <div v-if="isIndex" style="min-width: 30px;">
+        <div v-if="isIndex" style="min-width: 30px">
           <Icon
             type="lababofang"
             color="#FB004A"
@@ -42,12 +42,10 @@
           <div v-if="items.slotName" class="u-line-1">
             <slot :name="items.slotName" :row="record"></slot>
           </div>
-          <div v-else-if="items.render" v-html="items.render(record)" class="u-line-1">
-          
-          </div>
+          <div v-else-if="items.render" v-html="items.render(record)" class="u-line-1"></div>
           <div v-else class="u-line-1">
             <div v-if="record?.isSearch" v-html="record[items.searchValue]" class="u-line-1"></div>
-            <div v-else class="u-line-1">{{ record[items.value] }}</div> 
+            <div v-else class="u-line-1">{{ record[items.value] }}</div>
           </div>
         </div>
         <div></div>
@@ -68,10 +66,12 @@ const props = withDefaults(
     tableBackground?: string
     isIndex: boolean
     atviveId: string | number
+    isheader: boolean
   }>(),
   {
     tableData: [],
-    isIndex: false
+    isIndex: false,
+    isheader: true
   }
 )
 
