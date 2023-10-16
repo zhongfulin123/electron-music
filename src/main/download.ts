@@ -46,7 +46,7 @@ function sendLocalDownloadList(path) {
 }
 
 function watchDirName(path) {
-  fs.watch(path, (eventType, filename) => {
+  fs.watch(path, () => {
     sendLocalDownloadList(path)
   })
 }

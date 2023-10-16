@@ -1,5 +1,5 @@
 import { app, shell, BrowserWindow, Tray, Menu, nativeImage } from 'electron'
-import { join, resolve } from 'path'
+import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import logo from '../../resources/logo.png?asset'
 import './drag'
