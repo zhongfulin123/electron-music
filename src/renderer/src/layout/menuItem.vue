@@ -39,10 +39,13 @@ function toPage(menu) {
 <style scoped lang="scss">
 .menu-block {
   cursor: pointer;
+  margin-top: 2px;
+
   .menu-item {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 8px 20px;
+    border-radius: 8px;
     justify-content: flex-start;
     &:hover {
       background: var(--menu-item-hover-bg);

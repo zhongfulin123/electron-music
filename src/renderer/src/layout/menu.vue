@@ -100,6 +100,7 @@ async function queyUserPlayList() {
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 10px;
   background-color: var(--menu-bgcolor);
 
   .menu-wrap {

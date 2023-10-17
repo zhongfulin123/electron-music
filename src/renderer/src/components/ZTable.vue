@@ -67,6 +67,7 @@ const props = withDefaults(
     isIndex: boolean
     atviveId: string | number
     isheader: boolean
+    originalData: any
   }>(),
   {
     tableData: [],
@@ -77,7 +78,7 @@ const props = withDefaults(
 
 function handleDbClick(record) {
   startSong(record)
-  setPlaylist(props.tableData)
+  setPlaylist(props.originalData)
   setSongSheetId(props.atviveId)
 }
 </script>

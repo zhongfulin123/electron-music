@@ -4,6 +4,15 @@ export default {
   ['--light-bgcolor']: '#f5f5f5',
   ['--font-color']: '#4a4a4a',
 
+  // 留声背景颜色
+  ['--ls-boder']: '#DADADA',
+  ['--ls-bg']: '#1C1D20',
+
+  // 歌词颜色
+  ['--lyric-color']: '#A1A1A0',
+  ['--lyric-color-active']: '#000000',
+  ['--lyric-title-color']: '#5E5C59',
+
   //头部区域
   ['--header-bgcolor']: '#F5F5F5',
   ['--header-font-color']: '#4a4a4a',

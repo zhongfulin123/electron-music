@@ -16,6 +16,7 @@
 
     <ZTable
       :tableData="filteredSongs"
+      :originalData="tableData"
       :columns="columns"
       :isIndex="true"
       :atviveId="atviveId"
@@ -58,7 +59,7 @@
       </div>
       <div style="display: flex; justify-content: center; margin-top: 20px">
         <el-pagination
-          v-if="hotComments.length > 0 || playlistComment.length > 0"
+          v-if="pagination.total > 50"
           v-model:current-page="pagination.no"
           v-model:page-size="pagination.size"
           background="background"

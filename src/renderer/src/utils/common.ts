@@ -14,10 +14,7 @@ export function pad(num, n = 2) {
 export function formatDate(date, fmt = 'yyyy-MM-dd hh:mm:ss') {
   date = date instanceof Date ? date : new Date(date)
   if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(
-      RegExp.$1,
-      (date.getFullYear() + '').substr(4 - RegExp.$1.length)
-    )
+    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
   }
   let o = {
     'M+': date.getMonth() + 1,
@@ -29,10 +26,7 @@ export function formatDate(date, fmt = 'yyyy-MM-dd hh:mm:ss') {
   for (let k in o) {
     if (new RegExp(`(${k})`).test(fmt)) {
       let str = o[k] + ''
-      fmt = fmt.replace(
-        RegExp.$1,
-        RegExp.$1.length === 1 ? str : padLeftZero(str)
-      )
+      fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? str : padLeftZero(str))
     }
   }
   return fmt
@@ -43,6 +37,7 @@ function padLeftZero(str) {
 }
 
 export function formatTime(interval) {
+  console.log(interval)
   interval = interval | 0
   const minute = pad((interval / 60) | 0)
   const second = pad(interval % 60)
@@ -50,13 +45,13 @@ export function formatTime(interval) {
 }
 
 export function formatNumber(number) {
-  number = Number(number) || 0;
+  number = Number(number) || 0
   if (number >= 100000000) {
-    return `${(Math.round(number / 100000000))}亿`;
+    return `${Math.round(number / 100000000)}亿`
   } else if (number >= 10000) {
-    return `${(Math.round(number / 10000))}万`;
+    return `${Math.round(number / 10000)}万`
   } else {
-    return number.toString();
+    return number.toString()
   }
 }
 
@@ -67,7 +62,6 @@ export function genImgUrl(url, w, h) {
   url += `?param=${w}y${h}`
   return url
 }
-
 
 export function isLast(index, arr) {
   return index === arr.length - 1
@@ -91,7 +85,7 @@ export function shallowEqual(a, b, compareKey) {
   return true
 }
 
-export function notify(message, type?:string) {
+export function notify(message, type?: string) {
   const params = {
     message,
     duration: 1500
@@ -99,12 +93,11 @@ export function notify(message, type?:string) {
   const fn = type ? ElNotification[type] : Notification
   return fn(params)
 }
-['success', 'warning', 'info', 'error'].forEach(key => {
+;['success', 'warning', 'info', 'error'].forEach((key) => {
   notify[key] = (message) => {
     return notify(message, key)
   }
 })
-
 
 export function isUndef(v) {
   return v === undefined || v === null
