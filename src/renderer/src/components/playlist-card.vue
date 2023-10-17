@@ -1,7 +1,7 @@
 <template>
   <div @click="onClickCard" class="playlist-card">
     <div class="img-wrap">
-      <img :src="img" />
+      <el-image :src="img" class="img-container" lazy />
       <div class="desc-wrap" v-if="desc">
         <span class="desc">{{ desc }}</span>
       </div>
@@ -42,7 +42,7 @@ function onClickCard() {
     border-radius: 4px;
     overflow: hidden;
 
-    img {
+    .img-container {
       position: absolute;
       left: 0;
       right: 0;

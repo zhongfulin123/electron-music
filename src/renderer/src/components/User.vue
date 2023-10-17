@@ -2,7 +2,7 @@
   <div>
     <el-dropdown trigger="click" v-if="userStore.uid">
       <div class="avatar">
-        <img :src="userInfo?.avatarUrl" alt="" class="avatar-img" />
+        <el-image :src="userInfo?.avatarUrl" alt="" class="avatar-img" lazy />
         <div class="text">{{ userInfo?.nickname }}</div>
       </div>
       <template #dropdown>

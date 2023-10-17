@@ -4,7 +4,7 @@
       <span class="order">{{ String(order)?.padStart(2, '0') }}</span>
     </div>
     <div class="img-wrap">
-      <img :src="img" />
+      <el-image :src="img" class="icon-image" lazy />
       <PlayIcon class="play-icon" />
     </div>
     <div class="song-content">
@@ -49,7 +49,7 @@ defineProps<{
     width: 60px;
     height: 60px;
     margin-right: 8px;
-    img {
+    .icon-image {
       width: 100%;
       height: 100%;
     }

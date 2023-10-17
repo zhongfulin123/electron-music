@@ -1,7 +1,7 @@
 <template>
   <div class="header" v-if="playlist.id">
     <div class="img-wrap">
-      <img :src="playlist.coverImgUrl" />
+      <el-image :src="playlist.coverImgUrl" lazy class="img-container" />
     </div>
     <div class="content">
       <div class="title-wrap">
@@ -19,7 +19,7 @@
         <p class="title">{{ playlist.name }}</p>
       </div>
       <div class="creator-wrap">
-        <img :src="playlist.creator.avatarUrl" class="avatar" />
+        <el-aimge :src="playlist.creator.avatarUrl" class="avatar" lazy />
         <p class="creator">{{ playlist.creator.nickname }}</p>
         <p class="create-time">{{ formatDate(playlist.createTime, 'yyyy-MM-dd') }} 创建</p>
       </div>
@@ -74,7 +74,7 @@ function playAll() {
     height: 200px;
     margin-right: 24px;
 
-    img {
+    .img-container {
       width: 100%;
       height: 100%;
     }

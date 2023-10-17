@@ -1,7 +1,7 @@
 <template>
   <div class="container" v-for="(item, index) in commentList" :key="index">
     <div style="display: flex; align-items: flex-start">
-      <img :src="item.user?.avatarUrl" alt="" v-if="item.time" class="avatar" />
+      <el-image :src="item.user?.avatarUrl" alt="" v-if="item.time" class="avatar" lazy />
       <div
         :style="{
           'margin-left': item.time ? '' : '52px',

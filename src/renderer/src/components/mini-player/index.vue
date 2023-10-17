@@ -5,7 +5,7 @@
       <template v-if="hasCurrentSong">
         <div @click="togglePlayerShow" class="img-wrap">
           <div class="mask"></div>
-          <img class="blur" :src="currentSong.img" />
+          <el-image class="blur" :src="currentSong.img" lazy />
           <div class="player-control">
             <Icon :size="24" :type="playControlIcon" color="white" />
           </div>
@@ -285,7 +285,6 @@ watch(
       .bottom {
         margin-top: 5px;
         @include text-ellipsis;
-
       }
     }
   }

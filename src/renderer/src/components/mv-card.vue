@@ -1,7 +1,7 @@
 <template>
   <div @click="goMv" class="mv-card">
     <div class="img-wrap">
-      <img :src="img" />
+      <el-image :src="img" lazy class="img-container" />
       <div class="play-count-wrap" v-if="playCount">
         <Icon type="play" />
         {{ formatNumber(playCount) }}
@@ -40,7 +40,7 @@ function goMv() {
     position: relative;
     padding-top: 56%;
 
-    img {
+    .img-container {
       @include abs-stretch();
       width: 100%;
       height: 100%;

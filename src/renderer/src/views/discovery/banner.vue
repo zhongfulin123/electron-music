@@ -1,7 +1,7 @@
 <template>
   <el-carousel :interval="4000" class="banner-carousel" type="card">
     <el-carousel-item :key="banner.scm" v-for="banner in bannerList">
-      <img :src="banner.imageUrl" class="banner-img" />
+      <el-image :src="banner.imageUrl" class="banner-img" lazy />
     </el-carousel-item>
   </el-carousel>
 </template>

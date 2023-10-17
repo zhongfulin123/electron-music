@@ -27,11 +27,7 @@
               'max-width': 'fit-content'
             }"
           >
-            <img
-              :src="row.img"
-              alt=""
-              style="width: 50px; height: 50px; margin-right: 10px; border-radius: 5px"
-            />
+            <el-image :src="row.img" alt="" lazy class="img-container" />
             <div class="u-line-1">{{ row.name }}</div>
           </div>
           <div style="display: flex; flex: 1; height: 100%" v-if="row.mvId || row.fee">
@@ -124,6 +120,12 @@ async function getSongs() {
 .container {
   .u-line-1 {
     @include text-ellipsis;
+  }
+  .img-container {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 5px;
   }
   .label {
     border: 1px solid #ed5454;
