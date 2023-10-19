@@ -7,6 +7,9 @@ export default {
   // 留声背景颜色
   ['--ls-boder']: '#363636',
   ['--ls-bg']: '#1B1C1F',
+ 
+  //相似歌曲&包含歌单hover
+  ['--sx-color-hover']: '#373737',
 
   // 歌词颜色
   ['--lyric-color']: '#808080',

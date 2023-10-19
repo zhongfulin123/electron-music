@@ -64,10 +64,10 @@ const props = withDefaults(
     columns: any
     tableData: any
     tableBackground?: string
-    isIndex: boolean
-    atviveId: string | number
-    isheader: boolean
-    originalData: any
+    isIndex?: boolean
+    atviveId?: string | number
+    isheader?: boolean
+    originalData?: any
   }>(),
   {
     tableData: [],

@@ -4,7 +4,7 @@
       <el-col :md="12" :lg="8" :xl="4" v-for="(item, index) in list" :key="index">
         <div class="item u-line-1">
           <el-image :src="item.avatarUrl" alt="" class="avatar" lazy />
-          <div class="u-line-1" style="margin-left: 10px">
+          <div class="u-line-1" style="margin-left: 10px; flex: 1">
             <div style="display: flex">
               <span>{{ item.nickname }}</span>
               <span

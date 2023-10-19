@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-// import { watch } from 'vue';
 import { menuRoutes } from '@renderer/router'
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'

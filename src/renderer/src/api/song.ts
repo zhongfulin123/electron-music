@@ -13,7 +13,7 @@ export const getSongDetail = (ids):any => http.get(`/song/detail?ids=${ids}`)
 export const getTopSongs = (type):any => http.get(`/top/song?type=${type}`)
 
 // 相似音乐
-export const getSimiSongs = (id, option):any =>
+export const getSimiSongs = (id, option?):any =>
 http.get(`/simi/song?id=${id}`, option)
 
 // 歌词

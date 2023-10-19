@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import layout from '@renderer/layout/index.vue'
-import MiniPlayer from '@renderer/components/mini-player/index.vue'
-import player from '@renderer/components/player.vue'
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted } from 'vue'
 import { useGlobalStore } from '@renderer/store/global'
 import { useMusicStore } from '@renderer/store/music'
 import { getSongDetail } from '@renderer/api'
 import { createSong } from '@renderer/utils'
 const globalStore = useGlobalStore()
-const { setPlayingState } = useMusicStore()
+const { setPlayingState, setPlayerShow } = useMusicStore()
 onMounted(() => {
   window.api.initWatch(globalStore.muicPath)
   window.api.localDownloadList((_event, list) => {
     genSonglist(list)
   })
 })
-onUnmounted(() => {
-  setPlayingState(false)
+window.api.setpalySaate((_envet, data) => {
+  setPlayingState(data)
+  setPlayerShow(data)
 })
 async function genSonglist(playlist) {
   const trackIds = playlist.map((item) => item.split('-')[1].split('.')[0])
@@ -39,8 +38,6 @@ async function genSonglist(playlist) {
 
 <template>
   <layout></layout>
-  <MiniPlayer></MiniPlayer>
-  <player></player>
 </template>
 
 <style scoped lang="scss"></style>

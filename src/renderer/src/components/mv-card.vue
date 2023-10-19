@@ -6,9 +6,6 @@
         <Icon type="play" />
         {{ formatNumber(playCount) }}
       </div>
-      <div class="play-icon-wrap">
-        <PlayIcon :size="48" class="play-icon" />
-      </div>
       <div class="duration-wrap" v-if="duration">
         {{ formatTime(duration / 1000) }}
       </div>
@@ -21,7 +18,6 @@
 <script setup lang="ts">
 import { isDef, formatTime, formatNumber } from '@renderer/utils'
 import { useRouter } from 'vue-router'
-import PlayIcon from '@renderer/components/play-icon.vue'
 const props = defineProps(['id', 'img', 'duration', 'playCount', 'name', 'author'])
 const router = useRouter()
 function goMv() {
@@ -45,23 +41,6 @@ function goMv() {
       width: 100%;
       height: 100%;
       border-radius: 4px;
-    }
-
-    .play-icon-wrap {
-      @include abs-stretch;
-
-      &:hover {
-        .play-icon {
-          opacity: 1;
-        }
-      }
-
-      .play-icon {
-        @include abs-center;
-
-        opacity: 0;
-        transition: opacity 0.3s;
-      }
     }
 
     .play-count-wrap {

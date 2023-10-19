@@ -8,6 +8,8 @@ export default {
   ['--ls-boder']: '#DADADA',
   ['--ls-bg']: '#1C1D20',
 
+  //相似歌曲&包含歌单hover
+  ['--sx-color-hover']: '#f2f2f3',
   // 歌词颜色
   ['--lyric-color']: '#A1A1A0',
   ['--lyric-color-active']: '#000000',

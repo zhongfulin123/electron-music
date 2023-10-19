@@ -1,10 +1,13 @@
 <template>
   <div class="layout">
     <LayoutHeader />
-    <div class="layout-body">
+    <div v-if="$route.meta.single">
+      <router-view></router-view>
+    </div>
+    <div v-else class="layout-body">
       <splitpanes>
         <pane :size="19.8" :min-size="19.8">
-          <div class="layout-menu" v-show="isMenuShow">
+          <div class="layout-menu">
             <LayoutMenu />
           </div>
         </pane>
@@ -14,31 +17,26 @@
           </div>
         </pane>
       </splitpanes>
+      <MiniPlayer></MiniPlayer>
+      <player></player>
     </div>
-
-    <!-- <div class="layout-body">
-      <div class="layout-menu" v-show="isMenuShow">
-        <LayoutMenu />
-      </div>
-      <div class="content" id="page-content">
-        <router-view :class="routerViewCls" />
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { useMusicStore } from '@renderer/store/music'
+// import { useMusicStore } from '@renderer/store/music'
+import MiniPlayer from '@renderer/components/mini-player/index.vue'
+import player from '@renderer/components/player.vue'
 import LayoutHeader from './header.vue'
 import LayoutMenu from './menu.vue'
-import { storeToRefs } from 'pinia'
+// import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { menuRoutes } from '@renderer/router'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
-const musicStore = useMusicStore()
-const { isMenuShow } = storeToRefs(musicStore)
+// const musicStore = useMusicStore()
+// const { isMenuShow } = storeToRefs(musicStore)
 /**
  * 需要居中对齐的路由
  */
@@ -61,18 +59,20 @@ const routerViewCls = computed(() => {
 
   .layout-body {
     display: flex;
+    overflow-y: auto;
     height: calc(100% - #{$header-height});
 
     .layout-menu {
       // 这个100%已经减去了头部height
       height: calc(100% - #{$mini-player-height});
+      overflow-y: auto;
     }
 
     .content {
       flex: 1;
+      height: calc(100% - #{$mini-player-height});
       overflow-y: auto;
-      height: 90%;
-      padding-bottom: 50px;
+      // padding-bottom: 50px;
       .router-view-center {
         max-width: $center-content-max-width;
         margin: auto;

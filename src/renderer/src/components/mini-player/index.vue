@@ -117,9 +117,7 @@ onMounted(() => {
   audio.value.currentTime = currentTime.value
   audio.value.volume = muiscVolume.value
 })
-window.api.setpalySaate((_envet, data) => {
-  setPlayingState(data)
-})
+
 
 function togglePlaying() {
   if (!currentSong.value.id) {

@@ -83,16 +83,14 @@ function initData() {
  * 根据标签查询不同歌单列表 activeTabValue
  */
 async function queryPlaylists(init: boolean = false) {
-  if (playlistsRef.value) {
-    playlistsRef.value.scrollIntoView()
-  }
+  if (playlistsRef.value) playlistsRef.value.scrollIntoView()
   if (init) {
     pagination.value.no = 1
     list.value = []
   }
   const res = await getPlaylists({
     limit: pagination.value.size,
-    offset: (pagination.value.no - 1) * 50,
+    offset: (pagination.value.no - 1) * pagination.value.size,
     cat: activeTabValue.value
   })
   if (res.code !== 200) return
@@ -117,7 +115,7 @@ async function queryTopPlaylists() {
   background-color: #ec4141;
 }
 .playlists {
-  padding: 12px;
+  padding: 12px 12px 50px 12px;
 
   .top-play-list-card {
     margin-bottom: 16px;

@@ -18,6 +18,7 @@ function createWindow(): void {
       sandbox: false
     }
   })
+
   mainWindow.on('resize', (_event) => {
     mainWindow.webContents.send('resizeWindow', mainWindow.isMaximized())
   })

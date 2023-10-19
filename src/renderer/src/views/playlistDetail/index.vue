@@ -1,93 +1,96 @@
 <template>
-  <div class="playlist-detail" v-if="playlist.id" ref="headerRef">
-    <DetailHeader :playlist="playlist" :songs="tableData" />
-    <div class="search-box">
-      <ZTab :list="tabs" v-model="activeTab"></ZTab>
-      <el-input
-        v-model="searchText"
-        style="width: 150px"
-        size="small"
-        placeholder="搜索歌单音乐"
-        clearable
-        :prefix-icon="Search"
-        v-if="activeTab == 1"
-      />
-    </div>
+  <el-backtop :right="100" :bottom="100" target=".container" v-if="activeTab == 1" />
+  <div class="container" style="height: 100%; overflow-y: auto">
+    <div class="playlist-detail" v-if="playlist.id" ref="headerRef">
+      <DetailHeader :playlist="playlist" :songs="tableData" />
+      <div class="search-box">
+        <ZTab :list="tabs" v-model="activeTab"></ZTab>
+        <el-input
+          v-model="searchText"
+          style="width: 150px"
+          size="small"
+          placeholder="搜索歌单音乐"
+          clearable
+          :prefix-icon="Search"
+          v-if="activeTab == 1"
+        />
+      </div>
 
-    <ZTable
-      :tableData="filteredSongs"
-      :originalData="tableData"
-      :columns="columns"
-      :isIndex="true"
-      :atviveId="atviveId"
-      v-if="activeTab == 1"
-    >
-      <template #name="{ row }">
-        <div class="u-line-1" style="display: flex; align-items: center">
-          <div
-            class="u-line-1"
-            :style="{
-              color: currentSong.id === row.id && atviveId === songSheetId ? '#EC4141' : '',
-              flex: 3,
-              'max-width': 'fit-content'
-            }"
-          >
-            <div v-if="row?.isSearch" v-html="row.searchName" class="u-line-1"></div>
-            <div v-else class="u-line-1">{{ row.name }}</div>
-          </div>
-          <div style="display: flex; flex: 1; height: 100%" v-if="row.mvId || row.fee">
-            <div v-if="row.mvId" class="label">mv</div>
-            <div v-if="row.fee === 1" class="label">vip</div>
-          </div>
-        </div>
-      </template>
-      <template #operation="{ row }">
-        <Icon type="xiazai" @click.stop="download(row)"></Icon>
-      </template>
-    </ZTable>
-    <div class="container-comment" v-if="activeTab == 2" ref="commentRef">
-      <div v-if="hotComments.length > 0 && pagination.no === 1">
-        <div class="title">精彩评论</div>
-        <Comment :commentList="hotComments"></Comment>
-      </div>
-      <div
-        v-if="playlistComment.length > 0"
-        :style="{ 'margin-top': hotComments.length > 0 && pagination.no === 1 ? '50px' : '' }"
+      <ZTable
+        :tableData="filteredSongs"
+        :originalData="tableData"
+        :columns="columns"
+        :isIndex="true"
+        :atviveId="atviveId"
+        v-if="activeTab == 1"
       >
-        <div class="title">最新评论({{ pagination.total }})</div>
-        <Comment :commentList="playlistComment"></Comment>
+        <template #name="{ row }">
+          <div class="u-line-1" style="display: flex; align-items: center">
+            <div
+              class="u-line-1"
+              :style="{
+                color: currentSong.id === row.id && atviveId === songSheetId ? '#EC4141' : '',
+                flex: 3,
+                'max-width': 'fit-content'
+              }"
+            >
+              <div v-if="row?.isSearch" v-html="row.searchName" class="u-line-1"></div>
+              <div v-else class="u-line-1">{{ row.name }}</div>
+            </div>
+            <div style="display: flex; flex: 1; height: 100%" v-if="row.mvId || row.fee">
+              <div v-if="row.mvId" class="label">mv</div>
+              <div v-if="row.fee === 1" class="label">vip</div>
+            </div>
+          </div>
+        </template>
+        <template #operation="{ row }">
+          <Icon type="xiazai" @click.stop="download(row)"></Icon>
+        </template>
+      </ZTable>
+      <div class="container-comment" v-if="activeTab == 2" ref="commentRef">
+        <div v-if="hotComments.length > 0 && pagination.no === 1">
+          <div class="title">精彩评论</div>
+          <Comment :commentList="hotComments"></Comment>
+        </div>
+        <div
+          v-if="playlistComment.length > 0"
+          :style="{ 'margin-top': hotComments.length > 0 && pagination.no === 1 ? '50px' : '' }"
+        >
+          <div class="title">最新评论({{ pagination.total }})</div>
+          <Comment :commentList="playlistComment"></Comment>
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 20px">
+          <el-pagination
+            v-if="pagination.total > 50"
+            v-model:current-page="pagination.no"
+            v-model:page-size="pagination.size"
+            background="background"
+            layout="prev, pager, next"
+            :total="pagination.total"
+            @current-change="queryPlaylistComment()"
+            @size-change="queryPlaylistComment()"
+          />
+        </div>
       </div>
-      <div style="display: flex; justify-content: center; margin-top: 20px">
-        <el-pagination
-          v-if="pagination.total > 50"
-          v-model:current-page="pagination.no"
-          v-model:page-size="pagination.size"
-          background="background"
-          layout="prev, pager, next"
-          :total="pagination.total"
-          @current-change="queryPlaylistComment($route.params.id)"
-          @size-change="queryPlaylistComment($route.params.id)"
-        />
+      <div v-if="activeTab == 3">
+        <Subscribers :list="SubscriberLIst"></Subscribers>
+        <div style="display: flex; justify-content: center; margin-top: 20px">
+          <el-pagination
+            v-if="paginationSub.total > 60"
+            v-model:current-page="paginationSub.no"
+            v-model:page-size="paginationSub.size"
+            background="background"
+            layout="prev, pager, next"
+            :total="paginationSub.total"
+            @current-change="queryPlaylistSubscribers()"
+            @size-change="queryPlaylistSubscribers()"
+          />
+        </div>
       </div>
     </div>
-    <div v-if="activeTab == 3">
-      <Subscribers :list="SubscriberLIst"></Subscribers>
-      <div style="display: flex; justify-content: center; margin-top: 20px">
-        <el-pagination
-          v-if="paginationSub.total > 60"
-          v-model:current-page="paginationSub.no"
-          v-model:page-size="paginationSub.size"
-          background="background"
-          layout="prev, pager, next"
-          :total="paginationSub.total"
-          @current-change="queryPlaylistSubscribers($route.params.id)"
-          @size-change="queryPlaylistSubscribers($route.params.id)"
-        />
-      </div>
+    <div class="box-empty" v-else>
+      <el-empty description="暂无数据" />
     </div>
-  </div>
-  <div class="box-empty" v-else>
-    <el-empty description="暂无数据" />
   </div>
 </template>
 
@@ -118,6 +121,7 @@ import _ from 'lodash'
 const activeTab = ref(1)
 const atviveId = ref('')
 const searchText = ref('')
+const route = useRoute()
 const tabs = ref([
   {
     label: '歌曲列表',
@@ -177,12 +181,12 @@ const paginationSub = ref({
   size: 60,
   no: 1
 })
-async function queryPlaylistSubscribers(newval) {
+async function queryPlaylistSubscribers() {
   if (headerRef.value) {
     headerRef.value.scrollIntoView()
   }
   const res = await getPlaylistSubscribers({
-    id: newval,
+    id: route.params.id,
     limit: paginationSub.value.size,
     offset: (paginationSub.value.no - 1) * paginationSub.value.size
   })
@@ -202,10 +206,10 @@ const pagination = ref({
   size: 50,
   no: 1
 })
-async function queryPlaylistComment(newval) {
+async function queryPlaylistComment() {
   if (commentRef.value) commentRef.value.scrollIntoView()
   const res = await getPlaylistComment({
-    id: newval,
+    id: route.params.id,
     offset: (pagination.value.no - 1) * pagination.value.size
   })
   if (res.code !== 200) return
@@ -220,8 +224,8 @@ async function queryPlaylistComment(newval) {
  * @param newval 当前歌单id
  */
 const playlist = ref<Record<string, any>>({})
-async function initPlayList(newval) {
-  const res = await getListDetail({ id: newval })
+async function initPlayList() {
+  const res = await getListDetail({ id: route.params.id })
   if (res.code !== 200) {
     playlist.value = []
     return
@@ -320,21 +324,29 @@ async function download(row) {
 /**
  * 监听路由值变化重新获取数据
  */
-const route = useRoute()
 watch(
   () => route.params.id,
   (newval) => {
-    if (headerRef.value) {
-      headerRef.value.scrollIntoView()
-    }
+    if (headerRef.value) headerRef.value.scrollIntoView()
     atviveId.value = newval as string
     activeTab.value = 1
-    initPlayList(newval)
-    queryPlaylistComment(newval)
-    queryPlaylistSubscribers(newval)
+    initPlayList()
+    queryPlaylistComment()
+    queryPlaylistSubscribers()
   },
   {
     immediate: true
+  }
+)
+
+watch(
+  () => activeTab.value,
+  () => {
+    pagination.value.no = 1
+    paginationSub.value.no = 1
+    initPlayList()
+    queryPlaylistComment()
+    queryPlaylistSubscribers()
   }
 )
 </script>
@@ -359,6 +371,7 @@ watch(
   height: 100%;
 }
 .playlist-detail {
+  padding-bottom: 50px;
   .label {
     border: 1px solid #ed5454;
     padding: 0 4px;

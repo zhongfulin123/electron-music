@@ -6,7 +6,7 @@
         <SongCard
           :key="item.id"
           :order="getSongOrder(listIndex, index)"
-          @click.native="onClickSong(listIndex, index)"
+          @click="onClickSong(listIndex, index)"
           class="song-card"
           v-bind="nomalizeSong(item)"
           v-for="(item, index) in list"
@@ -64,7 +64,7 @@ function nomalizeSong(item) {
     ...res
   } = item
   return createSong({
-    res,
+    ...res,
     id,
     name,
     img: blurPicUrl,

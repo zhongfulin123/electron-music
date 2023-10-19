@@ -33,6 +33,6 @@ async function getMvs() {
 
 <style lang="scss" scoped>
 .new-mvs {
-  @include list(25%);
+  @include list(250px);
 }
 </style>

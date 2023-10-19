@@ -1,13 +1,12 @@
 /**
  * 业务工具方法
  */
-import { getAlbum, getMvDetail } from "@renderer/api"
+import { getAlbum, getMvDetail } from '@renderer/api'
 // import router from '@/router'
-import { isDef, notify } from './common';
+import { isDef, notify } from './common'
 
 export function createSong(song) {
-  const { id, name, img, artists, duration, albumId, albumName,mvId, ...rest } = song
-
+  const { id, name, img, artists, duration, albumId, albumName, mvId, ...rest } = song
   return {
     id,
     name,
@@ -52,7 +51,7 @@ export function genArtistisText(artists) {
 // }
 
 // export function goMv(id) {
-//   router.push(`/mv/${id}`) 
+//   router.push(`/mv/${id}`)
 // }
 
 function genSongPlayUrl(id) {

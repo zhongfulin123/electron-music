@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import {playModeMap, getSongImg } from '@renderer/utils'
+import { playModeMap, getSongImg } from '@renderer/utils'
 import { ElMessage } from 'element-plus'
 import { checkMusic } from '@renderer/api'
 function getRandomIndex(playlist, currentIndex) {
@@ -18,7 +18,7 @@ function getRandomIndex(playlist, currentIndex) {
 export const useMusicStore = defineStore(
   'music',
   () => {
-    const currentSong = ref<Record<string,any>>({})
+    const currentSong = ref<Record<string, any>>({})
     // 当前播放时长
     const currentTime = ref(0)
     // 播放状态
@@ -38,7 +38,7 @@ export const useMusicStore = defineStore(
     // 菜单显示
     const isMenuShow = ref(true)
     // 播放音量
-    const muiscVolume= ref(0.75)
+    const muiscVolume = ref(0.75)
     //当前播放歌单
 
     const songSheetId = ref('')
@@ -164,9 +164,9 @@ export const useMusicStore = defineStore(
     }
 
     async function setCurrentSong(data) {
-      console.log(data)
-      const res =await checkMusic(data.id)
-      if(!(res.success&&(data.fee==8 || data.fee===0)))ElMessage.warning(res.message==='ok'? '当前歌曲需要vip': res.message)
+      const res = await checkMusic(data.id)
+      if (!(res.success && (data.fee == 8 || data.fee === 0)))
+        ElMessage.warning(res.message === 'ok' ? '当前歌曲需要vip' : res.message)
       currentSong.value = data
     }
 
@@ -197,11 +197,11 @@ export const useMusicStore = defineStore(
     function setMenuShow(data) {
       isMenuShow.value = data
     }
-    function setMusicVolume(data){
-       muiscVolume.value = data
+    function setMusicVolume(data) {
+      muiscVolume.value = data
     }
 
-    function setSongSheetId(data){
+    function setSongSheetId(data) {
       songSheetId.value = data
     }
 
@@ -242,6 +242,6 @@ export const useMusicStore = defineStore(
     }
   },
   {
-    persist:true
+    persist: true
   }
 )

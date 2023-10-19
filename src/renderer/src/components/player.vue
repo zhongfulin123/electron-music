@@ -1,7 +1,7 @@
 <template>
   <div :class="getPlayerShowCls" class="player">
-    <div class="content" ref="playerRef">
-      <div class="song">
+    <div class="content">
+      <div class="song" ref="songRef">
         <div class="left">
           <img src="@renderer/assets/images/play-bar-support.png" class="bar-support" />
           <img src="@renderer/assets/images/play-bar.png" class="bar" :class="{ playing }" />
@@ -45,41 +45,137 @@
               background="background"
               layout="prev, pager, next"
               :total="pagination.total"
-              @current-change="queryComment()"
-              @size-change="queryComment()"
+              @current-change="queryComment(false)"
+              @size-change="queryComment(false)"
             />
           </div>
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <div v-if="SimiPlaylists.length > 0" style="margin-bottom: 20px">
+            <div class="title">包含这首歌的歌单</div>
+            <div class="simiPlaylists">
+              <div
+                v-for="(item, index) in SimiPlaylists"
+                :key="index"
+                class="item"
+                @click="toPlaylist(item.id)"
+              >
+                <el-image :src="item.coverImgUrl" alt="" class="item-image" />
+                <div class="name">{{ item.name }}</div>
+              </div>
+            </div>
+          </div>
+          <div v-if="simiSongs.length > 0">
+            <div class="title">喜欢这首歌的人也听</div>
+            <div class="simiPlaylists">
+              <div
+                v-for="(item, index) in simiSongs"
+                :key="index"
+                class="item"
+                @click="playSong(item)"
+              >
+                <el-image :src="item.img" alt="" class="item-image" />
+                <div class="name">
+                  {{ item.name }} - {{ item.artists?.map((item) => item.name).join(' ') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useMusicStore } from '@renderer/store/music'
 import { storeToRefs } from 'pinia'
-import { getLyric, getSongComment } from '@renderer/api'
+import { getLyric, getSongComment, getSimiSongs, getSimiPlaylists } from '@renderer/api'
 import Comment from '@renderer/components/Comment.vue'
-const { isPlayerShow, playing, currentSong, currentTime } = storeToRefs(useMusicStore())
+const { isPlayerShow, playing, currentSong, currentTime, playHistory } = storeToRefs(
+  useMusicStore()
+)
+const { setPlayerShow, startSong, setPlaylist } = useMusicStore()
 import BScroll from '@better-scroll/core'
 import ScrollBar from '@better-scroll/scroll-bar'
 import MouseWheel from '@better-scroll/mouse-wheel'
+import { createSong } from '@renderer/utils'
+import { useRouter } from 'vue-router'
 BScroll.use(ScrollBar)
 BScroll.use(MouseWheel)
 const getPlayerShowCls = computed(() => {
   return isPlayerShow.value ? 'show' : 'hide'
 })
-onMounted(() => {})
+
 let scroll = ref<any>()
 const wrapperRef = ref()
-const playerRef = ref()
+const songRef = ref()
 function init() {
-  queryComment()
+  queryComment(true)
   queryLyric()
-  if (playerRef.value) playerRef.value.scrollIntoView()
+  querySimiSongs()
+  querySimiPlaylists()
+  if (songRef.value) songRef.value.scrollIntoView()
 }
+/**
+ * 跳转歌单
+ */
+const router = useRouter()
+function toPlaylist(id) {
+  setPlayerShow(false)
+  router.push(`/playlist/${id}`)
+}
+/**
+ * 播放当前歌曲
+ */
+function playSong(song) {
+  startSong(song)
+  setPlaylist(playHistory.value)
+}
+
+/**
+ * 查询这首歌相似歌曲
+ */
+const simiSongs = ref<any[]>([])
+async function querySimiSongs() {
+  const res = await getSimiSongs(currentSong.value.id)
+  if (res.code !== 200) return
+  simiSongs.value = res.songs.map((song) => {
+    const {
+      id,
+      name,
+      artists,
+      mvid,
+      album: { picUrl },
+      duration,
+      ...res
+    } = song
+    return createSong({
+      ...res,
+      id,
+      name,
+      artists,
+      duration,
+      img: picUrl,
+      mvId: mvid
+    })
+  })
+}
+
+/**
+ * 查询包含这首歌歌单
+ */
+const SimiPlaylists = ref<any[]>([])
+async function querySimiPlaylists() {
+  const res = await getSimiPlaylists(currentSong.value.id)
+  if (res.code !== 200) return
+  SimiPlaylists.value = res.playlists
+}
+
+/**
+ * 查询歌曲评论
+ */
 const pagination = ref({
   total: 0,
   size: 50,
@@ -87,8 +183,11 @@ const pagination = ref({
 })
 const playlistComment = ref()
 const bottomRef = ref()
-async function queryComment() {
-  if (bottomRef.value) bottomRef.value.scrollIntoView()
+async function queryComment(init?: boolean) {
+  if (init) {
+    pagination.value.no = 1
+  }
+  if (bottomRef.value && !init) bottomRef.value.scrollIntoView()
   const res = await getSongComment({
     id: currentSong.value.id,
     offset: (pagination.value.no - 1) * pagination.value.size
@@ -98,6 +197,9 @@ async function queryComment() {
   pagination.value.total = res.total
 }
 
+/**
+ * 计算当前应该选中那段歌词
+ */
 const lyricList = ref<Array<any>>([])
 const activeIndex = computed(() => {
   return lyricList.value.length > 0
@@ -108,20 +210,27 @@ const activeIndex = computed(() => {
       })
     : -1
 })
-const lyricRef = ref()
+
 watch(
-  () => currentSong.value,
-  () => {
-    init()
+  () => [currentSong.value, getPlayerShowCls.value],
+  (newal) => {
+    if (newal[1] === 'show') init()
   },
   {
     immediate: true
   }
 )
+
+/**
+ * 监听当前选中歌词滚动到对应元素
+ */
+const lyricRef = ref()
 watch(
   () => activeIndex.value,
   (newal) => {
-    scroll.value && scroll.value.scrollToElement(lyricRef.value[newal], 200, 0, true)
+    if (lyricRef.value && lyricRef.value[newal]) {
+      scroll.value && scroll.value.scrollToElement(lyricRef.value[newal], 200, 0, true)
+    }
   }
 )
 // 歌手信息
@@ -134,6 +243,9 @@ const album = computed(() => {
   return currentSong.value?.albumName
 })
 
+/**
+ * 查询歌曲信息
+ */
 async function queryLyric() {
   const res = await getLyric(currentSong.value.id)
   if (res.code !== 200) return
@@ -152,6 +264,11 @@ async function queryLyric() {
   })
 }
 
+/**
+ *
+ * @param str 歌词
+ * 转换歌词格式
+ */
 function lyricTransform(str: string) {
   const list = str.split('\n').filter((item) => Boolean(item))
   const result: Array<any> = []
@@ -195,10 +312,7 @@ function lyricTransform(str: string) {
   right: 0;
   background: var(--body-bgcolor);
   z-index: $song-detail-z-index;
-  overflow: hidden;
-  overflow-y: auto;
   transition: transform 0.5s;
-
   &.hide {
     transform: translateY(105%);
   }
@@ -210,6 +324,7 @@ function lyricTransform(str: string) {
     max-width: $center-content-max-width;
     margin: auto;
     height: 100%;
+    overflow-y: auto;
     .song {
       display: flex;
       height: 500px;
@@ -300,14 +415,39 @@ function lyricTransform(str: string) {
       display: flex;
       box-sizing: border-box;
       padding: 0 20px 50px 30px;
+      .title {
+        font-weight: bold;
+      }
       .left {
-        flex: 4;
-        .title {
-          font-weight: bold;
-        }
+        flex: 8;
       }
       .right {
-        flex: 3;
+        flex: 4;
+        @include text-ellipsis;
+        margin-left: 100px;
+        .simiPlaylists {
+          margin-top: 10px;
+          .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            padding: 5px;
+            border-radius: 5px;
+            .item-image {
+              width: 30px;
+              height: 30px;
+              border-radius: 5px;
+              margin-right: 10px;
+            }
+            &:hover {
+              background-color: var(--sx-color-hover);
+            }
+            .name {
+              @include text-ellipsis;
+            }
+          }
+        }
       }
     }
   }

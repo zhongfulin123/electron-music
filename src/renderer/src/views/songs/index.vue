@@ -1,4 +1,5 @@
 <template>
+  <el-backtop :right="100" :bottom="100" target=".container" />
   <div class="container">
     <ZTab
       :list="tabs"
@@ -118,6 +119,8 @@ async function getSongs() {
 
 <style scoped lang="scss">
 .container {
+  height: 100%;
+  overflow-y: auto;
   .u-line-1 {
     @include text-ellipsis;
   }
