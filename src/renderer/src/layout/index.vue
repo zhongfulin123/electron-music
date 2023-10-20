@@ -17,8 +17,9 @@
           </div>
         </pane>
       </splitpanes>
-      <MiniPlayer></MiniPlayer>
-      <player></player>
+      <MiniPlayer />
+      <player />
+      <SearchMusic />
     </div>
   </div>
 </template>
@@ -26,6 +27,7 @@
 <script setup lang="ts">
 import MiniPlayer from '@renderer/components/mini-player/index.vue'
 import player from '@renderer/components/player.vue'
+import SearchMusic from '@renderer/components/SearchMusic.vue'
 import LayoutHeader from './header.vue'
 import LayoutMenu from './menu.vue'
 import { useRoute } from 'vue-router'
@@ -50,6 +52,7 @@ const routerViewCls = computed(() => {
   background-color: var(--menu-item-border-bg);
   position: relative;
 }
+
 .layout {
   height: 100%;
 

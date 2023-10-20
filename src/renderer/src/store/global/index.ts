@@ -6,6 +6,8 @@ export const useGlobalStore = defineStore(
     const theme = ref('white')
     const muicPath = ref('')
     const downList = ref([])
+    const searchValue = ref('')
+    const isSearchFouce = ref(false)
 
     function setTheme(e: string) {
       theme.value = e
@@ -14,14 +16,26 @@ export const useGlobalStore = defineStore(
     function setMusicPath(path) {
       muicPath.value = path
     }
-     
-    function setDownList (data){
+
+    function setDownList(data) {
       downList.value = data
     }
 
-    return { theme, setTheme, muicPath, setMusicPath,downList,setDownList }
+    return {
+      theme,
+      setTheme,
+      muicPath,
+      setMusicPath,
+      downList,
+      setDownList,
+      searchValue,
+      isSearchFouce
+    }
   },
   {
-    persist: true
+    persist: {
+      key: 'global',
+      paths: ['theme', 'downList', 'muicPath']
+    }
   }
 )

@@ -18,6 +18,9 @@ export default {
   //头部区域
   ['--header-bgcolor']: '#F5F5F5',
   ['--header-font-color']: '#4a4a4a',
+  ['--header-input-bgcolor']: '#EBEBEB',
+  ['--header-input-placeholdercolor']: '#BCBCBC',
+  ['--header-input-color']: '#000000',
 
   // 左侧菜单
   ['--menu-bgcolor']: '#FFFFFF',

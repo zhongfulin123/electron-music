@@ -7,7 +7,7 @@ export default {
   // 留声背景颜色
   ['--ls-boder']: '#363636',
   ['--ls-bg']: '#1B1C1F',
- 
+
   //相似歌曲&包含歌单hover
   ['--sx-color-hover']: '#373737',
 
@@ -19,6 +19,9 @@ export default {
   //头部区域
   ['--header-bgcolor']: '#222225',
   ['--header-font-color']: '#b1b1b1',
+  ['--header-input-bgcolor']: '#2B2B2E',
+  ['--header-input-placeholdercolor']: '#6B6B6D',
+  ['--header-input-color']: '#ffffff',
 
   // 左侧菜单
   ['--menu-bgcolor']: '#2B2B2B',
