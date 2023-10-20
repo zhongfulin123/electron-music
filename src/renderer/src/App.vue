@@ -13,6 +13,7 @@ onMounted(() => {
     genSonglist(list)
   })
 })
+
 window.api.setpalySaate((_envet, data) => {
   setPlayingState(data)
   setPlayerShow(data)

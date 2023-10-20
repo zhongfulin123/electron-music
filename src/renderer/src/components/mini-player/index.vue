@@ -117,7 +117,13 @@ onMounted(() => {
   audio.value.currentTime = currentTime.value
   audio.value.volume = muiscVolume.value
 })
+function handleKeyPress(event) {
+  if(event.keyCode===32){
+    togglePlaying()
+  }
+}
 
+window.addEventListener('keyup', handleKeyPress)
 
 function togglePlaying() {
   if (!currentSong.value.id) {
