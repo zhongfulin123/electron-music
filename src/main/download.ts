@@ -1,6 +1,6 @@
 import { dialog, ipcMain } from 'electron'
 import { mainWindow } from './index'
-import { dirname, resolve, join, extname } from 'path'
+import { resolve, extname } from 'path'
 import axios from 'axios'
 import fs from 'fs'
 import { pipeline } from 'stream'
@@ -21,11 +21,11 @@ ipcMain.handle('selectedDirectory', async (_evnet) => {
   return false
 })
 
-ipcMain.handle('downLoadMusic', async (_evnet, url ,name, outputPath) => {
+ipcMain.handle('downLoadMusic', async (_evnet, url, name, outputPath) => {
   try {
     const response = await axios.get(url, { responseType: 'stream' })
     console.log(`${name}-${url.split('=').pop()}`)
-    const writer = fs.createWriteStream(resolve(outputPath,`${name}-${url.split('=').pop()}`))
+    const writer = fs.createWriteStream(resolve(outputPath, `${name}-${url.split('=').pop()}`))
 
     await pipelineAsync(response.data, writer)
   } catch (error) {

@@ -1,9 +1,8 @@
 /**
  * 业务工具方法
  */
-import { getAlbum, getMvDetail } from '@renderer/api'
-// import router from '@/router'
-import { isDef, notify } from './common'
+import { getAlbum } from '@renderer/api'
+import { isDef } from './common'
 
 export function createSong(song) {
   const { id, name, img, artists, duration, albumId, albumName, mvId, ...rest } = song
@@ -39,20 +38,6 @@ export async function getSongImg(id, albumId) {
 export function genArtistisText(artists) {
   return (artists || []).map(({ name }) => name).join('/')
 }
-
-// 有时候虽然有mvId 但是请求却404 所以跳转前先请求一把
-// export async function goMvWithCheck(id) {
-//   try {
-//     await getMvDetail(id)
-//     goMv(id)
-//   } catch (error) {
-//     notify("mv获取失败")
-//   }
-// }
-
-// export function goMv(id) {
-//   router.push(`/mv/${id}`)
-// }
 
 function genSongPlayUrl(id) {
   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`

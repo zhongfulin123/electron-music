@@ -1,4 +1,12 @@
 @import './reset.scss';
+@font-face {
+  font-family: 'iconfont'; /* Project id 2749953 */
+  src:
+    url('//at.alicdn.com/t/c/font_2749953_9xp9mbfjp2.woff2?t=1697618431986') format('woff2'),
+    url('//at.alicdn.com/t/c/font_2749953_9xp9mbfjp2.woff?t=1697618431986') format('woff'),
+    url('//at.alicdn.com/t/c/font_2749953_9xp9mbfjp2.ttf?t=1697618431986') format('truetype');
+}
+
 #app {
   height: 100%;
   background-color: var(--body-bgcolor);

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 export const menuRoutes = [
   {
     path: '/discovery',
@@ -63,7 +63,7 @@ const routes: RouteRecordRaw[] = [
   ...menuRoutes
 ]
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 })
 

@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import PlayIcon from '@renderer/components/play-icon.vue'
 defineProps<{
-  order: string
+  order: string | number
   name: string
   img: string
   artistsText: string

@@ -1,12 +1,12 @@
 <template>
   <div class="layout">
     <LayoutHeader />
-    <div v-if="$route.meta.single">
+    <div v-if="$route.meta?.single">
       <router-view></router-view>
     </div>
     <div v-else class="layout-body">
       <splitpanes>
-        <pane :size="19.8" :min-size="19.8">
+        <pane size="19.8" min-size="19.8">
           <div class="layout-menu">
             <LayoutMenu />
           </div>
@@ -24,19 +24,15 @@
 </template>
 
 <script setup lang="ts">
-// import { useMusicStore } from '@renderer/store/music'
 import MiniPlayer from '@renderer/components/mini-player/index.vue'
 import player from '@renderer/components/player.vue'
 import LayoutHeader from './header.vue'
 import LayoutMenu from './menu.vue'
-// import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { menuRoutes } from '@renderer/router'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
-// const musicStore = useMusicStore()
-// const { isMenuShow } = storeToRefs(musicStore)
 /**
  * 需要居中对齐的路由
  */

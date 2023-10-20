@@ -74,7 +74,7 @@ const sortList = ['上升最快', '最热', '最新']
 const actviveSort = ref('上升最快')
 const pagination = ref({
   no: 1,
-  size: 30,
+  size: 96,
   total: 0
 })
 const mvs = ref<Record<string, any>>([])
