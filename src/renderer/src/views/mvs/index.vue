@@ -88,6 +88,7 @@ async function queryAllMvs(init?: boolean) {
     area: actviveArea.value,
     type: actviveType.value,
     order: actviveSort.value,
+    limit: pagination.value.size,
     offset: pagination.value.size * (pagination.value.no - 1)
   })
   if (res.code !== 200) return

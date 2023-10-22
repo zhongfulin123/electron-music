@@ -32,6 +32,9 @@ export default {
   //搜索框
   ['--input-bgcolor']: '#F7F7F7',
 
+  //进度条背景底色
+  ['--progress-bgcolor']: '#E5E5E5',
+
   //播放全部按钮
   ['--button-border-color']: '#D9D9D9',
   ['--button-hover-bgcolor']: '#F5F5F5',
