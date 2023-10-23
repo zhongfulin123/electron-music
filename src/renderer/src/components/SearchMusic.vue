@@ -26,7 +26,6 @@ const hotList = ref<Record<string, any>>()
 async function querySearchHot() {
   const res = await getSearchHot()
   if (res.code !== 200) return
-  console.log(res, 'res1')
   hotList.value = res.data
 }
 </script>
