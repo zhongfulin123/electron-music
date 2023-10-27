@@ -5,7 +5,13 @@
     v-for="(menu, index) in menusWithPlaylist"
     @click.stop="toPage(menu)"
   >
-    <div class="menu-item" :class="[$route.path === menu.path ? 'menu-item-active' : '']">
+    <div
+      class="menu-item"
+      :class="[
+        $route.path === menu.path ? 'menu-item-active' : '',
+        menu.path ? 'menu-item-click menu-item-hover' : ''
+      ]"
+    >
       <div v-if="menu?.title" class="menu-block-title">{{ menu.title }}</div>
       <Icon
         :type="menu?.meta?.icon"
@@ -38,7 +44,6 @@ function toPage(menu) {
 
 <style scoped lang="scss">
 .menu-block {
-  cursor: pointer;
   margin-top: 2px;
 
   .menu-item {
@@ -47,11 +52,16 @@ function toPage(menu) {
     padding: 8px 20px;
     border-radius: 8px;
     justify-content: flex-start;
-    &:hover {
-      background: var(--menu-item-hover-bg);
+    &-hover {
+      &:hover {
+        background: var(--menu-item-hover-bg);
+      }
     }
     &-active {
       background: var(--menu-item-active-bg);
+    }
+    &-click {
+      cursor: pointer;
     }
 
     .menu-block-title {

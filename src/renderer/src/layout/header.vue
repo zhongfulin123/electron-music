@@ -44,20 +44,6 @@ const { searchValue, isSearchFouce, theme } = storeToRefs(useGlobalStore())
 </script>
 
 <style scoped lang="scss">
-:deep(.el-input .el-input__wrapper) {
-  background-color: var(--header-input-bgcolor);
-  box-shadow: none;
-  border-radius: 20px;
-}
-:deep(.el-input__inner) {
-  color: var(--header-input-color);
-}
-:deep(.el-input__inner::placeholder) {
-  color: var(--header-input-placeholdercolor);
-}
-:deep(.el-input__prefix-inner) {
-  color: var(--header-input-placeholdercolor);
-}
 .ml-15 {
   margin-left: 15px;
 }
@@ -83,6 +69,20 @@ const { searchValue, isSearchFouce, theme } = storeToRefs(useGlobalStore())
     left: 22%;
     display: flex;
     align-items: center;
+    :deep(.el-input .el-input__wrapper) {
+      background-color: var(--header-input-bgcolor);
+      box-shadow: none;
+      border-radius: 20px;
+    }
+    :deep(.el-input__inner) {
+      color: var(--header-input-color);
+    }
+    :deep(.el-input__inner::placeholder) {
+      color: var(--header-input-placeholdercolor);
+    }
+    :deep(.el-input__prefix-inner) {
+      color: var(--header-input-placeholdercolor);
+    }
   }
 
   .right {

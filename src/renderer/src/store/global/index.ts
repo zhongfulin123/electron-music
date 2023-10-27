@@ -8,6 +8,7 @@ export const useGlobalStore = defineStore(
     const downList = ref([])
     const searchValue = ref('')
     const isSearchFouce = ref(false)
+    const searchHistoryList = ref<any[]>([])
 
     function setTheme(e: string) {
       theme.value = e
@@ -20,6 +21,12 @@ export const useGlobalStore = defineStore(
     function setDownList(data) {
       downList.value = data
     }
+    function setSearchHistoryList(value) {
+      searchHistoryList.value.unshift(value)
+    }
+    function celarSearchHistoryList() {
+      searchHistoryList.value = []
+    }
 
     return {
       theme,
@@ -29,13 +36,16 @@ export const useGlobalStore = defineStore(
       downList,
       setDownList,
       searchValue,
-      isSearchFouce
+      isSearchFouce,
+      searchHistoryList,
+      setSearchHistoryList,
+      celarSearchHistoryList
     }
   },
   {
     persist: {
       key: 'global',
-      paths: ['theme', 'downList', 'muicPath']
+      paths: ['theme', 'downList', 'muicPath', 'searchHistoryList']
     }
   }
 )

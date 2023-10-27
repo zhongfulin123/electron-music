@@ -1,6 +1,7 @@
 <template>
   <div class="layout">
     <LayoutHeader />
+    <SearchMusic />
     <div v-if="$route.meta?.single">
       <router-view></router-view>
     </div>
@@ -19,7 +20,6 @@
       </splitpanes>
       <MiniPlayer />
       <player />
-      <SearchMusic />
     </div>
   </div>
 </template>

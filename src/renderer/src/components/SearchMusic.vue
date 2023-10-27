@@ -5,7 +5,7 @@
     v-if="isSearchFouce"
   >
     <div>
-      <div>热搜榜</div>
+      <HotListVue></HotListVue>
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@
 import { getSearchHot } from '@renderer/api'
 import { onMounted, ref } from 'vue'
 import { useGlobalStore } from '@renderer/store/global'
-
+import HotListVue from './HotList.vue'
 import { storeToRefs } from 'pinia'
 const { searchValue, isSearchFouce } = storeToRefs(useGlobalStore())
 onMounted(() => {
@@ -34,7 +34,7 @@ async function querySearchHot() {
 .searchContainer {
   height: calc(100% - #{$mini-player-height} - 80px);
   background-color: var(--body-bgcolor);
-  z-index: 10;
+  z-index: 999;
   position: fixed;
   left: 22%;
   top: calc(#{$header-height} + 10px);
@@ -44,6 +44,7 @@ async function querySearchHot() {
     0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transition: all 0.5s;
+  padding: 20px;
 }
 .searchContainer-value {
   width: 400px;

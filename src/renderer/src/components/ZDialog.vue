@@ -20,6 +20,7 @@ function handleClose() {
 
 <style scoped lang="scss">
 .container {
+  background-color: var(--body-bgcolor);
   position: fixed;
   left: 50%;
   top: 50%;

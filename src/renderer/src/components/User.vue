@@ -19,21 +19,6 @@
       <Icon type="weidenglu-touxiang" size="25"></Icon>
       <div class="text">未登录</div>
     </div>
-    <!-- <el-dialog v-model="dialogFormVisible" :modal="false" width="30%" @close="closeDialog()">
-      <el-form :model="form" :rules="rules" ref="loginFormRef">
-        <el-form-item label="手机号" label-width="70" prop="phone">
-          <el-input v-model="form.phone" type="numbner" />
-        </el-form-item>
-        <el-form-item label="密码" label-width="70" prop="password">
-          <el-input v-model="form.password" type="password" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div style="display: flex; justify-content: center" @click.stop="handleLogin">
-          <el-button type="danger" color="#FF3A3A" style="width: 100%"> 登录 </el-button>
-        </div>
-      </template>
-    </el-dialog> -->
     <z-dialog v-model="dialogFormVisible" @finish="closeDialog">
       <div class="otherLogin" v-if="!isQr">
         <div style="position: absolute; left: 0; top: 0" @click="changeLgon">

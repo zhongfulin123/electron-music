@@ -21,7 +21,7 @@ onMounted(() => {
 })
 const route = useRoute()
 async function queryMvDetail(id?) {
-  const res = await getMvDetail(route.params.id)
+  // const res = await getMvDetail(route.params.id)
   const res1 = await getMvUrl(id || route.params.id)
   const player = new Player({
     id: 'vs',
