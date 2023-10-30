@@ -8,6 +8,7 @@ export const useGlobalStore = defineStore(
     const downList = ref([])
     const searchValue = ref('')
     const isSearchFouce = ref(false)
+    const isListSearch = ref(false)
     const searchHistoryList = ref<any[]>([])
 
     function setTheme(e: string) {
@@ -39,7 +40,8 @@ export const useGlobalStore = defineStore(
       isSearchFouce,
       searchHistoryList,
       setSearchHistoryList,
-      celarSearchHistoryList
+      celarSearchHistoryList,
+      isListSearch
     }
   },
   {

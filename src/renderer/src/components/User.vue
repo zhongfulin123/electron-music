@@ -51,7 +51,7 @@
             style="text-align: right; color: #0c73c2; cursor: pointer"
             @click="isCaptcha = !isCaptcha"
           >
-            {{ isCaptcha ? '验证码登录' : '密码登录' }}
+            {{ isCaptcha ? '密码登录 ' : '验证码登录' }}
           </div>
           <div
             style="display: flex; justify-content: center; margin-top: 10px"

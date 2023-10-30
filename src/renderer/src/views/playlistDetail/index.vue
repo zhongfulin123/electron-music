@@ -13,6 +13,8 @@
           clearable
           :prefix-icon="Search"
           v-if="activeTab == 1"
+          @focus="isListSearch = true"
+          @blur="isListSearch = false"
         />
       </div>
 
@@ -106,7 +108,7 @@ import { useGlobalStore } from '@renderer/store/global'
 import { storeToRefs } from 'pinia'
 import { Search } from '@element-plus/icons-vue'
 const { currentSong, songSheetId } = storeToRefs(useMusicStore())
-const { muicPath } = storeToRefs(useGlobalStore())
+const { muicPath, isListSearch } = storeToRefs(useGlobalStore())
 import {
   getSongDetail,
   getListDetail,

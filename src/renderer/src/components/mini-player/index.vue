@@ -86,6 +86,7 @@ import { computed, onMounted, ref, watch, nextTick } from 'vue'
 import ProgressBar from './progress-bar.vue'
 import Volume from './volume.vue'
 import { useMusicStore } from '@renderer/store/music'
+import { useGlobalStore } from '@renderer/store/global'
 import { storeToRefs } from 'pinia'
 import { playModeMap, isDef, formatTime } from '@renderer/utils'
 
@@ -113,12 +114,14 @@ const {
   startSong,
   setMusicVolume
 } = musicStore
+
+const { isListSearch } = storeToRefs(useGlobalStore())
 onMounted(() => {
   audio.value.currentTime = currentTime.value
   audio.value.volume = muiscVolume.value
 })
 function handleKeyPress(event) {
-  if(event.keyCode===32){
+  if (event.keyCode === 32 && !isListSearch.value) {
     togglePlaying()
   }
 }
