@@ -1,12 +1,20 @@
+# electron-music
+
 ### 安装依赖
-:::tips
-pnpm intsall
-:::
-### 运行项目
-:::tips
-pnpm dev
-:::
-### 打包项目
-:::tips
-pnpm build:win
-:::
+
+```bash
+$ pnpm install
+```
+
+### 运行
+
+```bash
+$ pnpm dev
+```
+
+### 打包
+
+```bash
+# For windows
+$ pnpm build:win
+```
