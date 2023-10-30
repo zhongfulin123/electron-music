@@ -1,7 +1,4 @@
 # electron-music
-![输入图片说明](screenshot/image.png)
-![输入图片说明](screenshot/image.png)
-
 
 ### 安装依赖
 
