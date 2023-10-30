@@ -46,9 +46,9 @@ export function formatTime(interval) {
 export function formatNumber(number) {
   number = Number(number) || 0
   if (number >= 100000000) {
-    return `${Math.round(number / 100000000)}亿`
+    return `${Math.floor(number / 100000000)}亿`
   } else if (number >= 10000) {
-    return `${Math.round(number / 10000)}万`
+    return `${Math.floor(number / 10000)}万`
   } else {
     return number.toString()
   }

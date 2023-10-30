@@ -1,6 +1,6 @@
 <template>
   <div class="header drag" :class="[{ 'header-bottom': theme === 'dark' }]">
-    <div class="left nodrag">
+    <!-- <div class="left nodrag">
       <el-input
         placeholder="search"
         :prefix-icon="Search"
@@ -9,7 +9,7 @@
         style="height: 30px"
         v-model="searchValue"
       />
-    </div>
+    </div> -->
     <div class="right nodrag">
       <User></User>
 
@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import Theme from '@renderer/components/theme.vue'
 import User from '@renderer/components/User.vue'
-import { Search } from '@element-plus/icons-vue'
+// import { Search } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import { useGlobalStore } from '@renderer/store/global'
 import _ from 'lodash'
@@ -40,7 +40,8 @@ function windowChange(type) {
 window.api.resizeWindow((_event, value) => {
   isMax.value = value
 })
-const { searchValue, isSearchFouce, theme } = storeToRefs(useGlobalStore())
+// const { searchValue, isSearchFouce, theme } = storeToRefs(useGlobalStore())
+const { theme } = storeToRefs(useGlobalStore())
 </script>
 
 <style scoped lang="scss">
