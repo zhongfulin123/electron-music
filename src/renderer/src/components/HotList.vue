@@ -14,8 +14,9 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  list: any[]
+  list?: any[]
 }>()
+console.log(props)
 </script>
 
 <style scoped lang="scss">
